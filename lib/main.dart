@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sprash_arch/features/auth/view/splash_screen.dart';
+import 'package:sprash_arch/features/bottombar/try.dart';
+import 'package:sprash_arch/features/home/view/home_page.dart';
 
 import 'core/constants/secure_storage.dart';
 import 'core/constants/theme.dart' as sparsh;
@@ -63,7 +65,7 @@ class _SparshAppState extends ConsumerState<SparshApp> {
       title: 'SPARSH',
       debugShowCheckedModeBanner: false,
       theme: currentTheme.toThemeData(),
-      home: SplashScreen(),
+      home: MyLogin(),
     );
   }
 }

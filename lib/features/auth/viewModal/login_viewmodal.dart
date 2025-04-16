@@ -12,10 +12,10 @@ import '../view/login_page.dart';
 class LoginViewModel {
   final Ref ref;
     final service = LoginService();
-  
+
   LoginViewModel(this.ref);
-  final loginuserRoleProvider = StateProvider<String>((ref) => '');
   // State providers
+  final StateProvider<String> loginuserRoleProvider = StateProvider<String>((ref) => '');
   final emailProvider = StateProvider<String>((ref) => '');
   final passwordProvider = StateProvider<String>((ref) => '');
   final rememberMeProvider = StateProvider<bool>((ref) => false);
@@ -36,7 +36,7 @@ class LoginViewModel {
     final secureStorage = ref.read(secureStorageProvider);
     final rememberMe = ref.read(rememberMeProvider);
 
-    if (email == 'admin' && password == 'admin') {
+    if (email == 'admin' && password == 'admin'||email == 'custm' && password == 'custm') {
       handleSuccessfulLogin(email, password, rememberMe, secureStorage);
      
           Navigator.push(
@@ -44,7 +44,7 @@ class LoginViewModel {
             MaterialPageRoute(builder: (context) => HomePage()),
           );
         
-      ref.read(userRoleProvider.notifier).state = 'admin';
+      ref.read(userRoleProvider.notifier).state = email;
       ref.read(showBannerProvider.notifier).state = true;
       return true;
     } else {

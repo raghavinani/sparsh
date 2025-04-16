@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sprash_arch/features/Appbar/top_appbar.dart';
 
 import 'token_detail.dart';
 import 'token_report.dart';
@@ -10,14 +11,7 @@ class TokenSummaryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: const Text('Token Summary'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
+      appBar: CustomAppBar(),
       body: Column(
         children: [
           _buildTopNav(context, activeTab),

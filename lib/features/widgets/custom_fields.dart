@@ -232,3 +232,54 @@ Widget ElevatedButtonWidget({
     ),
   );
 }
+
+
+Widget gradientbutton({
+  required String text,
+  required VoidCallback onPressed,  // Added this parameter
+  Color? color,
+  double? width,
+  double? height,
+}) {
+  return SizedBox(
+    width: 120,
+    height: 40,
+    child: Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          colors: [
+            Color.fromARGB(
+              (0.8 * 255).round(),
+              0,
+              157,
+              255,
+            ),
+            Color.fromARGB(255, 46, 55, 234),
+          ],
+          stops: const [0.0, 1.0],
+        ),
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: ElevatedButton(
+        onPressed: onPressed,  // Using the passed callback here
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.transparent,
+          shadowColor: Colors.transparent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+        child: Text(
+          text,
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+            color: Colors.white,
+          ),
+        ),
+      ),
+    ),
+  );
+}

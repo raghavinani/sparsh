@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sprash_arch/features/bottombar/bottomNav.dart';
+import 'package:sprash_arch/features/bottombar/bottomNavAnimation.dart';
 import 'package:sprash_arch/features/bottombar/modal_bottom.dart';
 
 Widget customBottomNavigationBar({

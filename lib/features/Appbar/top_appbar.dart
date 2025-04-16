@@ -45,7 +45,7 @@ final loginViewModelProvider = Provider((ref) => LoginViewModel(ref));
       if (userRole == null) return;
       
       setState(() {
-        _menuData = menuData[userRole] ?? menuData['admin']!;
+        _menuData = menuData[userRole] ?? menuData['custm']!;
       });
     });
   }

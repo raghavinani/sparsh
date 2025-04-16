@@ -40,7 +40,7 @@ class NavigationView extends StatefulWidget{
 class _NavigationView extends State<NavigationView>{
 
   final double borderRadius = 11.1;
-  late int _currentPage = 0;
+  late int _currentPage = 3;
 
 
   final Color color = Colors.blue;
@@ -48,7 +48,7 @@ class _NavigationView extends State<NavigationView>{
   @override
   void initState() {
      if(widget.durationAnimation != null) durationAnimation = widget.durationAnimation!;
-    _currentPage =  0;
+    _currentPage =  3;
     super.initState();
   }
 
@@ -144,7 +144,10 @@ class _NavigationView extends State<NavigationView>{
                               builder: (BuildContext context, BoxConstraints constraints) {
                                 return  Center(
 
-                                    child: AnimatedCrossFade(firstChild: e.childBefore, secondChild: e.childAfter, crossFadeState: (_currentPage == widget.items.indexOf(e)) ? CrossFadeState.showSecond : CrossFadeState.showFirst, duration:  Duration(milliseconds: durationAnimation.inMilliseconds ~/ 2))
+                                    child: AnimatedCrossFade(firstChild: e.childBefore, 
+                                    secondChild: e.childAfter, 
+                                    crossFadeState: (_currentPage == widget.items.indexOf(e)) ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+                                     duration:  Duration(milliseconds: durationAnimation.inMilliseconds ~/ 2))
                                 );
                               }
                           ),

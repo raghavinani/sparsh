@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:sprash_arch/features/Appbar/top_appbar.dart';
 
 import 'token_detail.dart';
 import 'token_summary.dart';
@@ -42,14 +43,7 @@ class _TokenReportScreenState extends State<TokenReportScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Token Report'),
-        backgroundColor: Colors.white,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
+      appBar: CustomAppBar(),
       body: Column(
         children: [
           _buildTopNav(context, widget.activeTab),
