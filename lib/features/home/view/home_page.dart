@@ -21,12 +21,12 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 232, 230, 230),
        extendBody: true,
        appBar: CustomAppBar(),
         drawer: CustomSidebar(),
         bottomNavigationBar: customBottomNavigationBar(
         onChangePage: (index) {
-          print('Selected index: $index');
         },
       ),
       body: GestureDetector(

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sprash_arch/features/Appbar/top_appbar.dart';
+
+import '../Sidebar/View/side_bar.dart';
 
 
 class SalesSummaryPage extends StatefulWidget {
@@ -48,10 +51,8 @@ class _SalesSummaryPageState extends State<SalesSummaryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Sales Summary'),
-        
-      ),
+      appBar:CustomAppBar(),
+      drawer: CustomSidebar(),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

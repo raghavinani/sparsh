@@ -2,7 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sprash_arch/core/constants/theme.dart';
+import 'package:sprash_arch/features/Appbar/top_appbar.dart';
 import 'package:sprash_arch/features/Screens/Modal/notification_modal.dart';
+import 'package:sprash_arch/features/Sidebar/View/side_bar.dart';
 import 'package:sprash_arch/features/bottombar/bottombar_widget.dart';
 
 
@@ -44,8 +46,8 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
     final notifications = ref.watch(notificationsProvider);
 
     return Scaffold(
-      // appBar: CustomAppBar(),
-      // drawer: CustomSidebar(),
+      appBar: CustomAppBar(),
+      drawer: CustomSidebar(),
       bottomNavigationBar: customBottomNavigationBar(onChangePage: (int value) {  }),
 
       body:

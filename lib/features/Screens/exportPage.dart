@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sprash_arch/features/Appbar/top_appbar.dart';
+import 'package:sprash_arch/features/Sidebar/View/side_bar.dart';
 import 'package:sprash_arch/features/widgets/custom_fields.dart';
 
 class Excelpage extends StatefulWidget {
@@ -14,10 +16,8 @@ class _ExcelpageState extends State<Excelpage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Excel Report'),
-        backgroundColor: Colors.blue,
-      ),
+      appBar: CustomAppBar(),
+      drawer: CustomSidebar(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(

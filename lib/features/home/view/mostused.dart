@@ -19,10 +19,7 @@ class MostlyUsedApps extends StatelessWidget {
       width: MediaQuery.of(context).size.width ,
       decoration: BoxDecoration(
           color: appTheme.backgroundColor,
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(12),
-            topRight: Radius.circular(12),
-          ),
+          borderRadius: BorderRadius.circular(12),
           boxShadow: [BoxShadow(color: Colors.black, blurRadius: 1)],
         ),
       child: LayoutBuilder(

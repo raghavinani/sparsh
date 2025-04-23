@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
+import 'package:sprash_arch/features/Appbar/top_appbar.dart';
 import 'package:sprash_arch/features/bottombar/bottombar_widget.dart';
 import 'package:sprash_arch/features/home/view/home_page.dart';
+
+import '../Sidebar/View/side_bar.dart';
 
 void main() {
   runApp(const DSR());
@@ -34,8 +37,8 @@ class _DSRvisitpageState extends State<DSRvisit> {
   Widget build(BuildContext context) {
     final isWideScreen = MediaQuery.of(context).size.width > 1080;
     return Scaffold(
-      // appBar: CustomAppBar(),
-      // drawer: CustomSidebar(),
+      appBar: CustomAppBar(),
+      drawer: CustomSidebar(),
       bottomNavigationBar: customBottomNavigationBar(onChangePage: (int value) {  }),
 
       body: GestureDetector(
