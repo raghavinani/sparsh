@@ -59,7 +59,6 @@ class _CustomSidebarState extends ConsumerState<CustomSidebar> {
       }
     });
   }
-
   void handleMenuItemSelection(String title) {
     setState(() {
       selectedMenuItem = title;
