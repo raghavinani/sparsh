@@ -7,10 +7,6 @@ import 'package:sprash_arch/features/home/view/home_page.dart';
 
 import '../Sidebar/View/side_bar.dart';
 
-void main() {
-  runApp(const DSR());
-}
-
 class DSR extends StatelessWidget {
   const DSR({super.key});
 
@@ -39,8 +35,8 @@ class _DSRvisitpageState extends State<DSRvisit> {
     return Scaffold(
       appBar: CustomAppBar(),
       drawer: CustomSidebar(),
-      bottomNavigationBar: customBottomNavigationBar(onChangePage: (int value) {  }),
-
+      bottomNavigationBar:
+          customBottomNavigationBar(context: context, currentIndex: 1),
       body: GestureDetector(
         onHorizontalDragEnd: (details) {
           if (details.primaryVelocity! > 0) {
@@ -101,37 +97,37 @@ class _DSRvisitpageState extends State<DSRvisit> {
                     children: [
                       isWideScreen
                           ? Column(
-                            children: [
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Expanded(child: _buildBasicDetailsForm()),
-                                  const SizedBox(width: 8.0),
-                                  Expanded(child: _buildKYCDetailsForm()),
-                                ],
-                              ),
-                              const SizedBox(height: 16.0),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Expanded(child: _buildEnrolmentSlabForm()),
-                                  const SizedBox(width: 8.0),
-                                  Expanded(child: _buildBrandsInfoForm()),
-                                ],
-                              ),
-                            ],
-                          )
+                              children: [
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(child: _buildBasicDetailsForm()),
+                                    const SizedBox(width: 8.0),
+                                    Expanded(child: _buildKYCDetailsForm()),
+                                  ],
+                                ),
+                                const SizedBox(height: 16.0),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(child: _buildEnrolmentSlabForm()),
+                                    const SizedBox(width: 8.0),
+                                    Expanded(child: _buildBrandsInfoForm()),
+                                  ],
+                                ),
+                              ],
+                            )
                           : Column(
-                            children: [
-                              _buildBasicDetailsForm(),
-                              const SizedBox(height: 16.0),
-                              _buildKYCDetailsForm(),
-                              const SizedBox(height: 16.0),
-                              _buildEnrolmentSlabForm(),
-                              const SizedBox(height: 16.0),
-                              _buildBrandsInfoForm(),
-                            ],
-                          ),
+                              children: [
+                                _buildBasicDetailsForm(),
+                                const SizedBox(height: 16.0),
+                                _buildKYCDetailsForm(),
+                                const SizedBox(height: 16.0),
+                                _buildEnrolmentSlabForm(),
+                                const SizedBox(height: 16.0),
+                                _buildBrandsInfoForm(),
+                              ],
+                            ),
                       const SizedBox(height: 16.0),
                       Center(
                         child: ElevatedButton(
@@ -490,10 +486,9 @@ class _DSRvisitpageState extends State<DSRvisit> {
           child: TextFormField(
             readOnly: true,
             controller: TextEditingController(
-              text:
-                  _selectedDate != null
-                      ? '${_selectedDate!.day}-${_selectedDate!.month}-${_selectedDate!.year}'
-                      : '',
+              text: _selectedDate != null
+                  ? '${_selectedDate!.day}-${_selectedDate!.month}-${_selectedDate!.year}'
+                  : '',
             ),
             onTap: () async {
               DateTime? pickedDate = await showDatePicker(
@@ -551,15 +546,14 @@ class _DSRvisitpageState extends State<DSRvisit> {
           child: DropdownButtonFormField<String>(
             style: const TextStyle(fontSize: 14, color: Colors.black),
             dropdownColor: Colors.white,
-            items:
-                items
-                    .map(
-                      (item) => DropdownMenuItem<String>(
-                        value: item,
-                        child: Text(item, style: const TextStyle(fontSize: 14)),
-                      ),
-                    )
-                    .toList(),
+            items: items
+                .map(
+                  (item) => DropdownMenuItem<String>(
+                    value: item,
+                    child: Text(item, style: const TextStyle(fontSize: 14)),
+                  ),
+                )
+                .toList(),
             onChanged: (value) {},
             decoration: InputDecoration(
               labelText: label, // Floating label
@@ -599,36 +593,34 @@ class _DSRvisitpageState extends State<DSRvisit> {
         Wrap(
           spacing: 8.0, // Adjust spacing between chips if needed
           runSpacing: 8.0, // Adjust spacing between rows if needed
-          children:
-              options.map((option) {
-                final isSelected = _selectedOption == option;
-                return ChoiceChip(
-                  label: Text(option),
-                  selected: isSelected,
-                  onSelected: (selected) {
-                    setState(() {
-                      _selectedOption = selected ? option : null;
-                    });
-                  },
-                  labelStyle:
-                      isSelected
-                          ? TextStyle(color: Colors.white)
-                          : TextStyle(color: Colors.black),
-                  backgroundColor: Colors.white,
-                  selectedColor: const Color.fromRGBO(0, 112, 183, 1),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0), // Circular shape
-                    side: BorderSide(
-                      color: const Color.fromRGBO(
-                        0,
-                        112,
-                        183,
-                        1,
-                      ), // Optional border
-                    ),
-                  ),
-                );
-              }).toList(),
+          children: options.map((option) {
+            final isSelected = _selectedOption == option;
+            return ChoiceChip(
+              label: Text(option),
+              selected: isSelected,
+              onSelected: (selected) {
+                setState(() {
+                  _selectedOption = selected ? option : null;
+                });
+              },
+              labelStyle: isSelected
+                  ? TextStyle(color: Colors.white)
+                  : TextStyle(color: Colors.black),
+              backgroundColor: Colors.white,
+              selectedColor: const Color.fromRGBO(0, 112, 183, 1),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0), // Circular shape
+                side: BorderSide(
+                  color: const Color.fromRGBO(
+                    0,
+                    112,
+                    183,
+                    1,
+                  ), // Optional border
+                ),
+              ),
+            );
+          }).toList(),
         ),
         const SizedBox(height: 16.0),
       ],

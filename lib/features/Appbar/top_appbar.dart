@@ -54,7 +54,7 @@ final loginViewModelProvider = Provider((ref) => LoginViewModel(ref));
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     double appBarHeight = isSearchActive ? 100 : 50;
-     final showBanner = ref.watch(_loginViewModel!.showBannerProvider);
+     final showBanner = _loginViewModel != null ? ref.watch(_loginViewModel!.showBannerProvider) : false;
 
     return Container(
       color: Colors.white,

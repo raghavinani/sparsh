@@ -32,7 +32,7 @@ final loginViewModelProvider = Provider((ref) => LoginViewModel(ref));
 
   late Animation<Offset> _animation2;
 
-  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _idController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   @override
@@ -41,7 +41,7 @@ final loginViewModelProvider = Provider((ref) => LoginViewModel(ref));
     _setupAnimations();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(loginViewModelProvider).loadStoredCredentials(
-            _emailController,
+            _idController,
             _passwordController,
           );
     });
@@ -67,7 +67,7 @@ final loginViewModelProvider = Provider((ref) => LoginViewModel(ref));
   @override
   void dispose() {
     _animationController.dispose();
-    _emailController.dispose();
+    _idController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
@@ -77,7 +77,7 @@ final loginViewModelProvider = Provider((ref) => LoginViewModel(ref));
     final viewModel = ref.watch(loginViewModelProvider);
     final errorMessage = ref.watch(viewModel.errorMessageProvider);
     final rememberMe = ref.watch(viewModel.rememberMeProvider);
-    // final email = ref.watch(viewModel.emailProvider);
+    // final id = ref.watch(viewModel.idProvider);
     // final password = ref.watch(viewModel.passwordProvider);
  
 
@@ -174,9 +174,9 @@ final loginViewModelProvider = Provider((ref) => LoginViewModel(ref));
                                 ),
                               const SizedBox(height: 10),
                               customTextField(
-                                controller: _emailController,
+                                controller: _idController,
                                 hintText: "Username",
-                                onChanged: (value) => ref.read(viewModel.emailProvider.notifier).state = value,
+                                onChanged: (value) => ref.read(viewModel.idProvider.notifier).state = value,
                               ),
                               const SizedBox(height: 15),
                               customTextField(
@@ -231,7 +231,7 @@ final loginViewModelProvider = Provider((ref) => LoginViewModel(ref));
                                     horizontal: 50,
                                   ),
                                 ),
-                                onPressed: () => viewModel.login(_emailController.text, _passwordController.text, context),
+                                onPressed: () => viewModel.login(_idController.text, _passwordController.text, context),
                                 child: const Text(
                                   "Log In",
                                   style: TextStyle(

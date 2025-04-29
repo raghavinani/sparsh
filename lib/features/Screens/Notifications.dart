@@ -48,7 +48,7 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
     return Scaffold(
       appBar: CustomAppBar(),
       drawer: CustomSidebar(),
-      bottomNavigationBar: customBottomNavigationBar(onChangePage: (int value) {  }),
+      bottomNavigationBar: customBottomNavigationBar(context: context, currentIndex: 5),
 
       body:
           notifications.isEmpty

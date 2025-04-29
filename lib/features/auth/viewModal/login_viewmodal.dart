@@ -16,7 +16,7 @@ class LoginViewModel {
   LoginViewModel(this.ref);
   // State providers
   final StateProvider<String> loginuserRoleProvider = StateProvider<String>((ref) => '');
-  final emailProvider = StateProvider<String>((ref) => '');
+  final idProvider = StateProvider<String>((ref) => '');
   final passwordProvider = StateProvider<String>((ref) => '');
   final rememberMeProvider = StateProvider<bool>((ref) => false);
   final errorMessageProvider = StateProvider<String?>((ref) => null);
@@ -24,7 +24,7 @@ class LoginViewModel {
   final userRoleProvider = StateProvider<String>((ref) => '');
   
   void resetProviders() {
-    ref.read(emailProvider.notifier).state = '';
+    ref.read(idProvider.notifier).state = '';
     ref.read(passwordProvider.notifier).state = '';
     ref.read(rememberMeProvider.notifier).state = false;
     ref.read(errorMessageProvider.notifier).state = null;
@@ -32,40 +32,43 @@ class LoginViewModel {
     ref.read(showBannerProvider.notifier).state = false;
   }
 
-  Future<bool> login(String email, String password, BuildContext context) async {
+  Future<bool> login(String id, String password, BuildContext context) async {
     final secureStorage = ref.read(secureStorageProvider);
     final rememberMe = ref.read(rememberMeProvider);
 
-    if (email == 'admin' && password == 'admin'||email == 'custm' && password == 'custm') {
-      handleSuccessfulLogin(email, password, rememberMe, secureStorage);
+    if (id == 'admin' && password == 'admin'||id == 'custm' && password == 'custm') {
+      handleSuccessfulLogin(id, password, rememberMe, secureStorage);
      
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => HomePage()),
           );
         
-      ref.read(userRoleProvider.notifier).state = email;
+      ref.read(userRoleProvider.notifier).state = id;
       ref.read(showBannerProvider.notifier).state = true;
       return true;
     } else {
       try {
-        final response = await service.loginWithEmailAndPassword(
-          email: email,
+        final response = await service.loginWithUserIdAndPassword(
+          userId: id,
           password: password,
         );
         
-        if (response.runtimeType == UserLogin) {
-          handleSuccessfulLogin(email, password, rememberMe, secureStorage);
+        if (response.isNotEmpty) {
+          handleSuccessfulLogin(id, password, rememberMe, secureStorage);
           
-          if (response.roleCode != null) {
-            String role = response.roleCode!.toLowerCase();
+          if (response["roles"] != null) {
+            String role = response["roles"].toString().toLowerCase();
             ref.read(userRoleProvider.notifier).state = 
                 role == 'admin' ? 'admin' : 'custm';
             ref.read(showBannerProvider.notifier).state = true;
           }
-          return true;
         }
-        return false;
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage()),
+        );
+        return true;
       } catch (e) {
         ref.read(errorMessageProvider.notifier).state = 
             e is ApiException ? "Invalid username or password" :
@@ -77,33 +80,33 @@ class LoginViewModel {
   }
 
   Future<void> handleSuccessfulLogin(
-    String email, 
+    String id, 
     String password, 
     bool rememberMe,
     SecureStorage secureStorage,
   ) async {
     if (rememberMe) {
-      await secureStorage.saveData('email', email);
+      await secureStorage.saveData('id', id);
       await secureStorage.saveData('password', password);
     }
   }
 
-  Future<void> loadStoredCredentials(TextEditingController emailController, 
+  Future<void> loadStoredCredentials(TextEditingController idController, 
       TextEditingController passwordController) async {
     final secureStorage = ref.read(secureStorageProvider);
-    final storedEmail = await secureStorage.readData('email');
+    final storedid = await secureStorage.readData('id');
     final storedPassword = await secureStorage.readData('password');
 
-    if (storedEmail != null && storedPassword != null) {
-      emailController.text = storedEmail;
+    if (storedid != null && storedPassword != null) {
+      idController.text = storedid;
       passwordController.text = storedPassword;
-      ref.read(emailProvider.notifier).state = storedEmail;
+      ref.read(idProvider.notifier).state = storedid;
       ref.read(passwordProvider.notifier).state = storedPassword;
       ref.read(rememberMeProvider.notifier).state = true;
     } else {
-      emailController.clear();
+      idController.clear();
       passwordController.clear();
-      ref.read(emailProvider.notifier).state = '';
+      ref.read(idProvider.notifier).state = '';
       ref.read(passwordProvider.notifier).state = '';
       ref.read(rememberMeProvider.notifier).state = false;
     }

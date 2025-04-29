@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sprash_arch/features/Appbar/top_appbar.dart';
 import 'package:sprash_arch/features/Sidebar/View/side_bar.dart';
+import 'package:sprash_arch/features/bottombar/bottombar_widget.dart';
 import 'package:sprash_arch/features/widgets/custom_fields.dart';
 
 class Excelpage extends StatefulWidget {
@@ -18,6 +19,8 @@ class _ExcelpageState extends State<Excelpage> {
     return Scaffold(
       appBar: CustomAppBar(),
       drawer: CustomSidebar(),
+      bottomNavigationBar:customBottomNavigationBar(context: context, currentIndex: 2),
+
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(

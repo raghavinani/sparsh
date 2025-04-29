@@ -25,10 +25,8 @@ class _HomePageState extends State<HomePage> {
        extendBody: true,
        appBar: CustomAppBar(),
         drawer: CustomSidebar(),
-        bottomNavigationBar: customBottomNavigationBar(
-        onChangePage: (index) {
-        },
-      ),
+        bottomNavigationBar: customBottomNavigationBar(context: context, currentIndex: 3),
+      
       body: GestureDetector(
   onHorizontalDragEnd: (details) {
     if (details.primaryVelocity! > 0) {

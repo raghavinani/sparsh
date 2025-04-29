@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sprash_arch/DataLayer/services/logout_service.dart';
+import 'package:sprash_arch/features/bottombar/bottombar_widget.dart';
 import 'package:sprash_arch/features/home/view/home_page.dart';
 
 import '../../widgets/custom_fields.dart';
@@ -35,6 +36,7 @@ class ProfilePage2 extends StatelessWidget {
           ),
         ],
       ),
+      bottomNavigationBar: customBottomNavigationBar(context: context, currentIndex: 0),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,7 +59,7 @@ class ProfilePage2 extends StatelessWidget {
                 children: [
                   ClipOval(
                     child: Image.asset(
-                      'profile_image.png',
+                      'assets/profile_image.png',
                       width: 70,
                       height: 70,
                       fit: BoxFit.cover,
