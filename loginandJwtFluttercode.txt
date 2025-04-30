@@ -1,0 +1,177 @@
+import 'package:dio/dio.dart';
+import 'package:backendtrial/services/dio_client.dart' show DioClient;
+import 'package:backendtrial/services/network_service.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:backendtrial/services/provider.dart';
+import 'package:backendtrial/services/secure_storage_service.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:jwt_decode/jwt_decode.dart';
+
+
+class AuthService {
+  // Store user data after successful login
+  Map<String, dynamic>? currentUser;
+  List<String>? userRoles;
+  Map<String, dynamic>? userData;
+  Map<String, dynamic>? responseData;
+  static const String baseUrl = 'https://qa.birlawhite.com:55232';
+  final dioClient = DioClient();
+
+  Future<Map<String, dynamic>> login(String username, String password) async {
+    final body = {
+    "userID": username,
+    "password": password,
+    "appRegId":"fdwAEk1NTsmJH7sYzDPmyL:APA91bGBrRhs83rFmzw3jUmAPIrKcz4PlW1u3T-qsBdNwhlkGKEXayxcMxAHbpT57NFG3-ayQC7LGnLrmGGWlhDgeATITJOUmtafRD_IquUDvruXvlRTOkFVOXfTUjJX8JZGm-gwyHu3"
+};
+
+    // Log request data
+    // print('Sending request to API with data:');
+    // print(body);
+
+    try {
+      final response = await dioClient.dio.post(
+        '$baseUrl/api/Auth/execute',
+        data: body,
+        options: Options(headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },),
+      );
+
+      // Log response data
+      print('Received response from API:');
+      // print(response.data);
+
+      if (response.statusCode != 200) {
+        throw Exception('Login failed with status code ${response.statusCode}');
+      }
+
+      try{
+      if (response.data == null) {
+        throw Exception('Login failed: Response data is null');
+
+        } else {
+              responseData = response.data as Map<String, dynamic>;
+            userData=responseData?['data'] as Map<String, dynamic>;
+
+                    print(userData?['areaCode']);
+                    print(userData?['roles']);
+                    print(userData?['pages']);
+                    print(userData?['emplName']);
+                   
+        }
+        }catch(e){  print('Error during login: $e');
+              throw Exception("Error during login: $e");
+      }
+        
+        return userData!;
+      
+    } catch (e) {
+      print('Error during login: $e');
+      throw Exception("Error during login: $e");
+    }
+  }
+
+  Map<String,dynamic> getApiData() {
+    // Return the userData
+    return userData as Map<String, dynamic>;
+  }
+  
+  String getEmployeeName() {
+    // Return the employee name from the userData
+    return userData!['emplName']?.toString() ?? '';
+  }
+  String getAreaCode() => userData?['areacode'].toString() ?? '';
+  List<String> getRoles() => userData?['roles'] ?? [];
+  List<String> getPages() {
+    final pages = userData?['pages'];
+    if (pages is List) {
+      return List<String>.from(pages.whereType<String>());
+    }
+    return [];
+  }
+
+
+
+//  Jwt Token call
+  Future<String?> getToken(String partnerId, String secretKey) async {
+    
+    final Map<String, String> requestBody = {
+      'PartnerID': partnerId,
+      'SecretKey': secretKey,
+    };
+
+    try {
+      final response = await dioClient.dio.post(
+        '$baseUrl/api/Token/generate',
+        data: requestBody,
+        options: Options(headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = response.data;
+        final token = responseData['Token'];
+        if (token != null) {
+          await SecureStorageService.storeToken(token);
+        }
+        return token;
+      } else {
+        throw Exception('Failed to get token: ${response.statusCode} - ${response.data}');
+      }
+    } catch (error) {
+      throw Exception('Error during token request: $error');
+    }
+  }
+
+  Future<String?> getStoredToken() async {
+    return await SecureStorageService.getToken();
+  }
+
+  Future<void> clearToken() async {
+    await SecureStorageService.deleteToken();
+  }
+
+// Get the Token data/payload 
+Future<Map<String,dynamic>> getTokenData() async {
+  final token = await SecureStorageService.getToken();
+  if (token != null) {
+    Map<String, dynamic> decodedToken = Jwt.parseJwt(token);
+    return decodedToken;
+  } else {
+    throw Exception('Token not found');
+  }
+}
+
+// Check token Validity
+Future<bool> isTokenValid() async {
+  try {
+      final token = await SecureStorageService.getToken();
+    return  Jwt.isExpired(token!);
+  } catch (error) {
+    print('Error checking token validity: $error');
+    return false;
+  }
+}
+}
+
+
+class SecureStorageService {
+  static const _storage = FlutterSecureStorage();
+
+  static Future<void> storeToken(String token) async {
+    await _storage.write(key: 'auth_token', value: token);
+  }
+
+  static Future<String?> getToken() async {
+    return await _storage.read(key: 'auth_token');
+  }
+
+  static Future<void> deleteToken() async {
+    await _storage.delete(key: 'auth_token');
+  }
+}
+
+//check on main by initialRoute: Jwt.isExpired(token!)?'/home':'/login',
