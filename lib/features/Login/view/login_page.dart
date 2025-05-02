@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sprash_arch/DataLayer/Datacalls/LoginApi.dart';
 import 'package:sprash_arch/core/constants/secure_storage.dart';
 import 'package:sprash_arch/core/constants/theme.dart';
-import 'package:sprash_arch/features/auth/view/forgetpass.dart';
-import 'package:sprash_arch/features/auth/viewModal/login_viewmodal.dart';
-import 'package:sprash_arch/features/auth/widgets/custom_text_field.dart';
+import 'package:sprash_arch/features/Login/view/forgetpass.dart';
+import 'package:sprash_arch/features/Login/viewModal/login_viewmodal.dart';
+import 'package:sprash_arch/features/Login/widgets/custom_text_field.dart';
 
 import '../widgets/footer.dart';
 import 'login_otp.dart';

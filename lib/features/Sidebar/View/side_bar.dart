@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sprash_arch/core/constants/theme.dart';
 import 'package:sprash_arch/features/Screens/dsr_Visit.dart';
 import 'package:sprash_arch/features/Tokens/view/token_detail.dart';
-import 'package:sprash_arch/features/auth/viewModal/login_viewmodal.dart';
+import 'package:sprash_arch/features/Login/viewModal/login_viewmodal.dart';
 
 import '../../../DataLayer/modals/role_menu_data.dart';
 import '../../Appbar/Modals/menu_model.dart';

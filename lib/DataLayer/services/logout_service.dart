@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sprash_arch/features/auth/view/login_page.dart';
-import 'package:sprash_arch/features/auth/viewModal/login_viewmodal.dart';
+import 'package:sprash_arch/features/Login/view/login_page.dart';
+import 'package:sprash_arch/features/Login/viewModal/login_viewmodal.dart';
 
 import '../../core/constants/secure_storage.dart';
 
 
-import '../../features/auth/view/splash_screen.dart';
+import '../../features/Login/view/splash_screen.dart';
 
 class LogoutService {
   final SecureStorage _secureStorage;

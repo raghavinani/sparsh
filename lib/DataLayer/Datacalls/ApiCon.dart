@@ -97,19 +97,22 @@ class ApiService {
       throw Exception('Error sending data: $e');
     }
   }
+// can be used to get a distinct column values 
+  // Future<List<String>> getDistinctValues(String columnName) async {
+  //   try {
+  //     final response = await dioClient.dio.get("$baseUrl/distinct/$columnName");
+  //     if (response.statusCode == 200) {
+  //       return List<String>.from(response.data);
+  //     }
+  //     throw Exception("Failed to fetch distinct values for $columnName");
+  //   } catch (e) {
+  //     throw Exception("Error fetching distinct values: $e");
+  //   }
+  // }
 
-  Future<List<String>> getDistinctValues(String columnName) async {
-    try {
-      final response = await dioClient.dio.get("$baseUrl/distinct/$columnName");
-      if (response.statusCode == 200) {
-        return List<String>.from(response.data);
-      }
-      throw Exception("Failed to fetch distinct values for $columnName");
-    } catch (e) {
-      throw Exception("Error fetching distinct values: $e");
-    }
-  }
 
+
+//   get the States that are preloaded in the registration report 
   Future<List<String>> getStates() async {
     try {
       print('Attempting to fetch states from: $baseUrl/getstates');
@@ -150,6 +153,8 @@ class ApiService {
     }
   }
 
+
+// Get the distinct Districts for a state the user selects
   Future<List<String>> getAreas(String state) async {
     try {
       final response = await dioClient.dio.get(
@@ -170,6 +175,8 @@ class ApiService {
     }
   }
 
+
+// get the areacode that coresponds to States
   Future<String> getAreaCode(String area) async {
     try {
       final response = await dioClient.dio.get(

@@ -2,6 +2,7 @@
 import 'package:dio/dio.dart';
 import 'package:sprash_arch/DataLayer/services/dio_client.dart';
 
+import '../../core/constants/secure_storage.dart';
 import '../modals/LoginM.dart';
 import '../services/network_service.dart';
 
@@ -33,6 +34,7 @@ class LoginService {
   Map<String, dynamic>? responseData;
   // static const String baseUrl = 'https://qa.birlawhite.com:55232/api/Auth/execute';
   final dioClient = DioClient();
+  SecureStorage pref= SecureStorage();           // insances of SS and Dio 
   LoginService({this.baseUrl = 'https://qa.birlawhite.com:55232'});
 
   // Login with email and password
@@ -166,49 +168,48 @@ class LoginService {
     }
   }
 
-  // Get user by ID
-  Future<UserLogin?> getUserById(
-    String userId, {
-    Duration timeout = const Duration(seconds: 30),
-  }) async {
-    if (userId.isEmpty) {
-      throw ApiException('Invalid user ID');
-    }
+
+//  Jwt Token call
+  Future<String?> getToken(String partnerId, String secretKey) async {
+    
+    final Map<String, String> requestBody = {
+      'PartnerID': partnerId,
+      'SecretKey': secretKey,
+    };
 
     try {
-      final response = await NetworkService.get(
-        '$baseUrl/api/UserLogin/$userId',
-        options: Options(
-          validateStatus: (status) => status != null && status < 500,
-        ),
+      final response = await dioClient.dio.post(
+        '$baseUrl/api/Token/generate',
+        data: requestBody,
+        options: Options(headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }),
       );
 
-      switch (response.statusCode) {
-        case 200:
-          return UserLogin.fromJson(response.data);
-        case 400:
-          throw ApiException('Invalid request', statusCode: 400);
-        case 404:
-          return null; // User not found
-        case 500:
-          throw ApiException('Server error', statusCode: 500);
-        default:
-          throw ApiException(
-            'Unexpected error: ${response.statusMessage}',
-            statusCode: response.statusCode,
-          );
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = response.data;
+        final token = responseData['Token'];
+        if (token != null) {
+          await pref.storeToken(token);
+        }
+        return token;
+      } else {
+        throw Exception('Failed to get token: ${response.statusCode} - ${response.data}');
       }
-    } on DioException catch (e) {
-      if (e.type == DioExceptionType.connectionTimeout ||
-          e.type == DioExceptionType.receiveTimeout) {
-        throw NetworkException('Request timed out');
-      }
-      throw NetworkException('Network error: ${e.message}');
-    } catch (e) {
-      if (e is ApiException || e is NetworkException) {
-        rethrow;
-      }
-      throw ApiException('Unknown error: $e');
+    } catch (error) {
+      throw Exception('Error during token request: $error');
     }
   }
+
+  Future<String?> getStoredToken() async {
+    return await pref.getToken();
+  }
+
+  Future<void> clearToken() async {
+    await pref.deleteToken();
+  }
+
+
+
 }

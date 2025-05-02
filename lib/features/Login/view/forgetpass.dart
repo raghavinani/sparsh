@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sprash_arch/core/constants/theme.dart';
-import 'package:sprash_arch/features/auth/repository/pass_reset.dart';
+import 'package:sprash_arch/features/Login/repository/pass_reset.dart';
 
 
 
