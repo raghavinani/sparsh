@@ -19,7 +19,10 @@ class _ExcelpageState extends State<Excelpage> {
     return Scaffold(
       appBar: CustomAppBar(),
       drawer: CustomSidebar(),
-      bottomNavigationBar:customBottomNavigationBar(context: context, currentIndex: 2),
+      bottomNavigationBar: customBottomNavigationBar(
+        context: context,
+        currentIndex: 2,
+      ),
 
       body: SafeArea(
         child: SingleChildScrollView(
@@ -68,21 +71,67 @@ class _ExcelpageState extends State<Excelpage> {
                       ElevatedButtonWidget(text: 'Go', color: Colors.blue),
                       SizedBox(height: 8),
                       Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          ElevatedButtonWidget(
-                            text: 'Copy',
-                            color: Colors.grey,
+                          Flexible(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 4.0,
+                              ),
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.grey,
+                                  padding: EdgeInsets.symmetric(vertical: 8),
+                                ),
+                                onPressed: () {},
+                                child: FittedBox(child: Text('Copy')),
+                              ),
+                            ),
                           ),
-                          ElevatedButtonWidget(
-                            text: 'Excel',
-                            color: Colors.green,
+                          Flexible(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 4.0,
+                              ),
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.green,
+                                  padding: EdgeInsets.symmetric(vertical: 8),
+                                ),
+                                onPressed: () {},
+                                child: FittedBox(child: Text('Excel')),
+                              ),
+                            ),
                           ),
-                          ElevatedButtonWidget(text: 'CSV', color: Colors.blue),
-                          ElevatedButtonWidget(
-                            text: 'PDF',
-                            color: Colors.orange,
+                          Flexible(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 4.0,
+                              ),
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.blue,
+                                  padding: EdgeInsets.symmetric(vertical: 8),
+                                ),
+                                onPressed: () {},
+                                child: FittedBox(child: Text('CSV')),
+                              ),
+                            ),
+                          ),
+                          Flexible(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 4.0,
+                              ),
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.orange,
+                                  padding: EdgeInsets.symmetric(vertical: 8),
+                                ),
+                                onPressed: () {},
+                                child: FittedBox(child: Text('PDF')),
+                              ),
+                            ),
                           ),
                         ],
                       ),

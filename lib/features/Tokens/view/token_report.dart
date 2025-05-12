@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sprash_arch/features/Appbar/top_appbar.dart';
+import 'package:sprash_arch/features/Sidebar/View/side_bar.dart';
 
 import 'token_detail.dart';
 import 'token_summary.dart';
@@ -44,6 +45,7 @@ class _TokenReportScreenState extends State<TokenReportScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(),
+      drawer: CustomSidebar(),
       body: Column(
         children: [
           _buildTopNav(context, widget.activeTab),
@@ -55,8 +57,10 @@ class _TokenReportScreenState extends State<TokenReportScreen> {
                   Center(
                     child: Text(
                       "Token Scan Details Confidential",
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   SizedBox(height: 12),
@@ -66,7 +70,7 @@ class _TokenReportScreenState extends State<TokenReportScreen> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(12),
                       boxShadow: [
-                        BoxShadow(color: Colors.grey.shade300, blurRadius: 6)
+                        BoxShadow(color: Colors.grey.shade300, blurRadius: 6),
                       ],
                     ),
                     child: Column(
@@ -80,9 +84,12 @@ class _TokenReportScreenState extends State<TokenReportScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Start Date",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold)),
+                                  Text(
+                                    "Start Date",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                   GestureDetector(
                                     onTap: () => _selectDate(context, true),
                                     child: Container(
@@ -92,15 +99,19 @@ class _TokenReportScreenState extends State<TokenReportScreen> {
                                       ),
                                       child: Padding(
                                         padding: EdgeInsets.symmetric(
-                                            vertical: 12, horizontal: 8),
+                                          vertical: 12,
+                                          horizontal: 8,
+                                        ),
                                         child: Text(
                                           startDate != null
-                                              ? DateFormat("dd/MM/yyyy")
-                                                  .format(startDate!)
+                                              ? DateFormat(
+                                                "dd/MM/yyyy",
+                                              ).format(startDate!)
                                               : "Select Date",
                                           style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 14),
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -115,9 +126,12 @@ class _TokenReportScreenState extends State<TokenReportScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("End Date",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold)),
+                                  Text(
+                                    "End Date",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                   GestureDetector(
                                     onTap: () => _selectDate(context, false),
                                     child: Container(
@@ -127,15 +141,19 @@ class _TokenReportScreenState extends State<TokenReportScreen> {
                                       ),
                                       child: Padding(
                                         padding: EdgeInsets.symmetric(
-                                            vertical: 12, horizontal: 8),
+                                          vertical: 12,
+                                          horizontal: 8,
+                                        ),
                                         child: Text(
                                           endDate != null
-                                              ? DateFormat("dd/MM/yyyy")
-                                                  .format(endDate!)
+                                              ? DateFormat(
+                                                "dd/MM/yyyy",
+                                              ).format(endDate!)
                                               : "Select Date",
                                           style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 14),
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -148,44 +166,47 @@ class _TokenReportScreenState extends State<TokenReportScreen> {
                         SizedBox(height: 16),
 
                         // Check Now & Date Info Row
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            // Check Now Button
-                            ElevatedButton(
-                              onPressed: () {
-                                // TODO: Implement check logic
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.blue,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10)),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 10),
-                                child: Text("Check Now",
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 16)),
+                        Center(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              // TODO: Implement check logic
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
                               ),
                             ),
-
-                            // Date Info
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Text(
-                                  "At Date: ${startDate != null ? DateFormat("dd/MM/yyyy").format(startDate!) : '--/--/----'}",
-                                  style: TextStyle(fontSize: 14),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 10,
+                              ),
+                              child: Text(
+                                "Check Now",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
                                 ),
-                                Text(
-                                  "To Date: ${endDate != null ? DateFormat("dd/MM/yyyy").format(endDate!) : '--/--/----'}",
-                                  style: TextStyle(fontSize: 14),
-                                ),
-                              ],
+                              ),
                             ),
-                          ],
+                          ),
                         ),
+
+                        // // Date Info
+                        // Column(
+                        //   crossAxisAlignment: CrossAxisAlignment.end,
+                        //   children: [
+                        //     Text(
+                        //       "At Date: ${startDate != null ? DateFormat("dd/MM/yyyy").format(startDate!) : '--/--/----'}",
+                        //       style: TextStyle(fontSize: 14),
+                        //     ),
+                        //     Text(
+                        //       "To Date: ${endDate != null ? DateFormat("dd/MM/yyyy").format(endDate!) : '--/--/----'}",
+                        //       style: TextStyle(fontSize: 14),
+                        //     ),
+                        //   ],
+                        // ),
                       ],
                     ),
                   ),
@@ -198,11 +219,14 @@ class _TokenReportScreenState extends State<TokenReportScreen> {
                     child: Container(
                       padding: EdgeInsets.all(8),
                       color: Colors.grey[700],
-                      child: Text("Category",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18)),
+                      child: Text(
+                        "Category",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
                     ),
                   ),
 
@@ -234,14 +258,18 @@ class _TokenReportScreenState extends State<TokenReportScreen> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.grey,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       ),
                       child: Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                        child: Text("Close",
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 16)),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 10,
+                        ),
+                        child: Text(
+                          "Close",
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        ),
                       ),
                     ),
                   ),
@@ -257,25 +285,36 @@ class _TokenReportScreenState extends State<TokenReportScreen> {
   Widget _buildTopNav(BuildContext context, String activeTab) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-          horizontal: 8, vertical: 4), // Add padding outside the border
+        horizontal: 8,
+        vertical: 4,
+      ), // Add padding outside the border
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.grey.shade300,
-            width: 1.0,
-          ),
+          border: Border.all(color: Colors.grey.shade300, width: 1.0),
           borderRadius: BorderRadius.circular(8.0),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _navItem(context, 'Details', activeTab == 'Details',
-                const TokenDetailsPage(activeTab: 'Details')),
-            _navItem(context, 'Report', activeTab == 'Report',
-                const TokenReportScreen(activeTab: 'Report')),
-            _navItem(context, 'Summary', activeTab == 'Summary',
-                const TokenSummaryScreen(activeTab: 'Summary')),
+            _navItem(
+              context,
+              'Details',
+              activeTab == 'Details',
+              const TokenDetailsPage(activeTab: 'Details'),
+            ),
+            _navItem(
+              context,
+              'Report',
+              activeTab == 'Report',
+              const TokenReportScreen(activeTab: 'Report'),
+            ),
+            _navItem(
+              context,
+              'Summary',
+              activeTab == 'Summary',
+              const TokenSummaryScreen(activeTab: 'Summary'),
+            ),
           ],
         ),
       ),
@@ -283,29 +322,39 @@ class _TokenReportScreenState extends State<TokenReportScreen> {
   }
 
   Widget _navItem(
-      BuildContext context, String label, bool isActive, Widget targetPage) {
+    BuildContext context,
+    String label,
+    bool isActive,
+    Widget targetPage,
+  ) {
     return GestureDetector(
       onTap: () {
         if (!isActive) {
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (_) => targetPage));
+            context,
+            MaterialPageRoute(builder: (_) => targetPage),
+          );
         }
       },
       child: Container(
-        padding:
-            EdgeInsets.symmetric(horizontal: 16, vertical: 8), // Add padding
+        padding: EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 8,
+        ), // Add padding
         decoration: BoxDecoration(
-          color: isActive
-              ? Color.fromRGBO(0, 112, 183, 1)
-              : Colors.transparent, // Background color
+          color:
+              isActive
+                  ? Color.fromRGBO(0, 112, 183, 1)
+                  : Colors.transparent, // Background color
           borderRadius: BorderRadius.circular(8), // Optional: rounded corners
         ),
         child: Text(
           label,
           style: TextStyle(
-            color: isActive
-                ? Colors.white
-                : Colors.black, // White text when active
+            color:
+                isActive
+                    ? Colors.white
+                    : Colors.black, // White text when active
             fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
             fontSize: 16,
           ),

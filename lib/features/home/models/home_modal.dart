@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class GridItem {
@@ -10,18 +9,17 @@ class GridItem {
 }
 
 int selectedTabIndex = 0;
-  final List<String> tabTitles = [
-    'Quick Menu',
-    'Dashboard',
-    'Document',
-    'Trending',
-  ];
+final List<String> tabTitles = [
+  'Quick Menu',
+  'Dashboard',
+  'Document',
+  'Trending',
+];
 
-  final appData = [
+final appData = [
   {'name': 'DSR', 'icon': Icons.bar_chart},
   {'name': 'Staff Attendance', 'icon': Icons.person_add},
   {'name': 'DSR Exception', 'icon': Icons.description},
   {'name': 'Token Scan', 'icon': Icons.qr_code_scanner},
-   {'name': 'DSR', 'icon': Icons.bar_chart},
-    {'name': 'DSR', 'icon': Icons.bar_chart},
+  {'name': 'Token Details', 'icon': Icons.list_alt},
 ];

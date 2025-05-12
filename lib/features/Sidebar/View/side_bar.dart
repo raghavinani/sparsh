@@ -9,7 +9,6 @@ import 'package:sprash_arch/features/Login/viewModal/login_viewmodal.dart';
 import '../../../DataLayer/modals/role_menu_data.dart';
 import '../../Appbar/Modals/menu_model.dart';
 
-
 class CustomSidebar extends ConsumerStatefulWidget {
   const CustomSidebar({super.key});
 
@@ -29,7 +28,7 @@ class _CustomSidebarState extends ConsumerState<CustomSidebar> {
   String? selectedMenuItem;
   String? selectedSubMenuItem;
   String? expandedTitle;
-  final loginViewModelProvider = Provider((ref)=> LoginViewModel(ref));
+  final loginViewModelProvider = Provider((ref) => LoginViewModel(ref));
 
   @override
   void initState() {
@@ -41,7 +40,11 @@ class _CustomSidebarState extends ConsumerState<CustomSidebar> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     // Update menu data when role changes
-    final userRole = ref.watch(loginViewModelProvider.select((provider) => provider.loginuserRoleProvider));
+    final userRole = ref.watch(
+      loginViewModelProvider.select(
+        (provider) => provider.loginuserRoleProvider,
+      ),
+    );
     if (_menuData == null || _menuData?.roleName != userRole) {
       setState(() {
         _menuData = menuData[userRole.toString()] ?? menuData['admin']!;
@@ -52,16 +55,21 @@ class _CustomSidebarState extends ConsumerState<CustomSidebar> {
   void initializeMenuData() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
-        final userRole = ref.read(loginViewModelProvider.select((provider) => provider.loginuserRoleProvider));
+        final userRole = ref.read(
+          loginViewModelProvider.select(
+            (provider) => provider.loginuserRoleProvider,
+          ),
+        );
         setState(() {
-          _menuData = menuData[userRole.toString()] ?? menuData['admin']!; //default
+          _menuData =
+              menuData[userRole.toString()] ?? menuData['admin']!; //default
         });
       }
     });
   }
+
   void handleMenuItemSelection(String title) {
     setState(() {
-      selectedMenuItem = title;
       // Reset all menu items
       _menuData?.transactionLinks.forEach((item) => item.isSelected = false);
       _menuData?.reportLinks.forEach((item) => item.isSelected = false);
@@ -92,12 +100,6 @@ class _CustomSidebarState extends ConsumerState<CustomSidebar> {
     });
   }
 
-  void handleSubMenuItemSelection(String subLink) {
-    setState(() {
-      selectedSubMenuItem = subLink;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -107,88 +109,94 @@ class _CustomSidebarState extends ConsumerState<CustomSidebar> {
       return const Center(child: CircularProgressIndicator());
     }
 
-    return Stack(
-      children: [
-        Positioned(
-          child: SizedBox(
-            width: screenWidth * 0.7,
-            child: Drawer(
-              child: Container(
-                decoration: const BoxDecoration(color: Colors.white),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: 90,
-                        decoration: BoxDecoration(color: apptheme.primaryColor),
-                        alignment: Alignment.center,
-                        child: Image.asset(
-                          "assets/logo.jpeg",
-                          height: 70,
-                          width: 140,
-                          fit: BoxFit.fill,
+    return SafeArea(
+      child: Stack(
+        children: [
+          Positioned(
+            child: SizedBox(
+              width: screenWidth * 0.7,
+              child: Drawer(
+                child: Container(
+                  decoration: const BoxDecoration(color: Colors.white),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 90,
+                          decoration: BoxDecoration(
+                            color: apptheme.primaryColor,
+                          ),
+                          alignment: Alignment.center,
+                          child: Image.asset(
+                            "assets/logo.jpeg",
+                            height: 70,
+                            width: 140,
+                            fit: BoxFit.fill,
+                          ),
                         ),
-                      ),
-                      _buildCollapsibleMenu(
-                        'Transactions',
-                        _menuData!.transactionLinks,
-                        Icons.receipt_long,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Divider(
-                          color: apptheme.primaryColor,
-                          thickness: 0.8,
+                        _buildCollapsibleMenu(
+                          'Transactions',
+                          _menuData!.transactionLinks,
+                          Icons.receipt_long,
                         ),
-                      ),
-                      _buildCollapsibleMenu(
-                        'Reports',
-                        _menuData!.reportLinks,
-                        Icons.insert_chart,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Divider(
-                          color: apptheme.primaryColor,
-                          thickness: 0.8,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Divider(
+                            color: apptheme.primaryColor,
+                            thickness: 0.8,
+                          ),
                         ),
-                      ),
-                      _buildCollapsibleMenu(
-                        'Masters',
-                        _menuData!.masterLinks,
-                        Icons.settings_applications,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Divider(
-                          color: apptheme.primaryColor,
-                          thickness: 0.8,
+                        _buildCollapsibleMenu(
+                          'Reports',
+                          _menuData!.reportLinks,
+                          Icons.insert_chart,
                         ),
-                      ),
-                      _buildCollapsibleMenu(
-                        'Miscellaneous',
-                        _menuData!.miscLinks
-                            .map((link) => MenuItem(title: link, subLinks: []))
-                            .toList(),
-                        Icons.more_horiz,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Divider(
-                          color: apptheme.primaryColor,
-                          thickness: 0.8,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Divider(
+                            color: apptheme.primaryColor,
+                            thickness: 0.8,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 20),
-                    ],
+                        _buildCollapsibleMenu(
+                          'Masters',
+                          _menuData!.masterLinks,
+                          Icons.settings_applications,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Divider(
+                            color: apptheme.primaryColor,
+                            thickness: 0.8,
+                          ),
+                        ),
+                        _buildCollapsibleMenu(
+                          'Miscellaneous',
+                          _menuData!.miscLinks
+                              .map(
+                                (link) => MenuItem(title: link, subLinks: []),
+                              )
+                              .toList(),
+                          Icons.more_horiz,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Divider(
+                            color: apptheme.primaryColor,
+                            thickness: 0.8,
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -207,6 +215,8 @@ class _CustomSidebarState extends ConsumerState<CustomSidebar> {
               setState(() {
                 expandedSections[title] = !(expandedSections[title] ?? false);
                 expandedTitle = expandedSections[title]! ? title : null;
+                selectedMenuItem = title;
+                selectedSubMenuItem = null;
               });
             },
             child: Container(
@@ -216,7 +226,7 @@ class _CustomSidebarState extends ConsumerState<CustomSidebar> {
                 horizontal: 10.0,
               ),
               color:
-                  expandedTitle == title
+                  selectedMenuItem == title
                       ? const Color.fromRGBO(0, 112, 183, 0.1)
                       : Colors.transparent,
               child: Row(
@@ -224,7 +234,7 @@ class _CustomSidebarState extends ConsumerState<CustomSidebar> {
                   Icon(
                     icon,
                     color:
-                        expandedTitle == title
+                        selectedMenuItem == title
                             ? const Color.fromRGBO(0, 112, 183, 1)
                             : Colors.black,
                     size: 20,
@@ -235,7 +245,7 @@ class _CustomSidebarState extends ConsumerState<CustomSidebar> {
                       title,
                       style: TextStyle(
                         color:
-                            expandedTitle == title
+                            selectedMenuItem == title
                                 ? const Color.fromRGBO(0, 112, 183, 1)
                                 : Colors.black,
                         fontWeight: FontWeight.bold,
@@ -247,10 +257,10 @@ class _CustomSidebarState extends ConsumerState<CustomSidebar> {
                     expandedSections[title]!
                         ? Icons.expand_less
                         : Icons.expand_more,
-                    color:
-                        expandedTitle == title
-                            ? const Color.fromRGBO(0, 112, 183, 1)
-                            : Colors.black,
+                    // color:
+                    //     expandedTitle == title
+                    //         ? const Color.fromRGBO(0, 112, 183, 1)
+                    //         : Colors.black,
                     size: 14,
                   ),
                 ],
@@ -272,83 +282,78 @@ class _CustomSidebarState extends ConsumerState<CustomSidebar> {
   Widget _buildSubMenuItem(BuildContext context, MenuItem link) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
-      child: GestureDetector(
-        onTap: () {
+      child: PopupMenuButton<String>(
+        offset: const Offset(280, 0),
+        onOpened: () {
           setState(() {
-            handleMenuItemSelection(link.title);
+            selectedSubMenuItem = link.title;
           });
         },
-        child: PopupMenuButton<String>(
-          offset: const Offset(280, 0),
-          child: Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(
-              vertical: 5.0,
-              horizontal: 10.0,
-            ),
-            color: link.isSelected ? Colors.blue[100] : Colors.transparent,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  link.title,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                    color: link.isSelected ? Colors.blue[700] : Colors.black,
-                  ),
+        child: Padding(
+          padding: const EdgeInsets.only(
+            left: 20.0,
+          ), // Shift submenu items slightly right
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                link.title,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                  color:
+                      selectedSubMenuItem == link.title
+                          ? Colors.blue[700]
+                          : Colors.black,
                 ),
-                Icon(
-                  Icons.arrow_right,
-                  size: 14,
-                  color: link.isSelected ? Colors.blue[700] : Colors.black,
-                ),
-              ],
-            ),
+              ),
+              Icon(
+                Icons.arrow_right,
+                size: 14,
+                color: link.isSelected ? Colors.blue[700] : Colors.black,
+              ),
+            ],
           ),
-          onSelected: (value) {
-            handleMenuItemSelection(link.title);
-            handleSubMenuItemSelection(value);
-            if (value == 'Rural Retailer Entry/Update') {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const DSR(),
-                ),
-              );
-            } else if (value == 'Token Scan') {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const TokenDetailsPage()),
-              );
+        ),
+        onSelected: (value) {
+          handleMenuItemSelection(link.title);
+          if (value == 'Rural Retailer Entry/Update') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const DSR()),
+            );
+          } else if (value == 'Token Scan') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const TokenDetailsPage()),
+            );
             // } else if (value == 'Order Update') {
             //   Navigator.push(
             //     context,
             //     MaterialPageRoute(builder: (context) => const OrderUpdate()),
             //   );
-            }
-           },
-          itemBuilder:
-              (context) =>
-                  link.subLinks
-                      .map<PopupMenuItem<String>>(
-                        (subLink) => PopupMenuItem<String>(
-                          value: subLink,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 2.0),
-                            child: Text(
-                              '• $subLink',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w300,
-                                fontSize: 14.0,
-                                color: Color.fromARGB(255, 2, 27, 48),
-                              ),
+          }
+        },
+        itemBuilder:
+            (context) =>
+                link.subLinks
+                    .map<PopupMenuItem<String>>(
+                      (subLink) => PopupMenuItem<String>(
+                        value: subLink,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 2.0),
+                          child: Text(
+                            '• $subLink',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w300,
+                              fontSize: 14.0,
+                              color: Color.fromARGB(255, 2, 27, 48),
                             ),
                           ),
                         ),
-                      )
-                      .toList(),
-        ),
+                      ),
+                    )
+                    .toList(),
       ),
     );
   }

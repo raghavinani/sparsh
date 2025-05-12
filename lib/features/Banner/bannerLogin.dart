@@ -3,14 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginBanner extends StatefulWidget {
-  const LoginBanner({super.key});
+  final void Function(bool) onVisibilityChanged;
+  const LoginBanner({super.key, required this.onVisibilityChanged});
 
   @override
   _LoginBannerState createState() => _LoginBannerState();
 }
 
 class _LoginBannerState extends State<LoginBanner> {
-  bool showBanner = false;
+  bool showImageBanner = false;
+  bool showFormBanner = false;
+
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController departmentController = TextEditingController();
+  final TextEditingController locationController = TextEditingController();
 
   @override
   void initState() {
@@ -19,42 +25,53 @@ class _LoginBannerState extends State<LoginBanner> {
   }
 
   Future<void> checkFirstLogin() async {
-    try {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      final bool hasSeenBanner = prefs.getBool('hasSeenBanner') ?? false;
+    final prefs = await SharedPreferences.getInstance();
+    final bool hasSeenBanner = prefs.getBool('hasSeenBanner') ?? false;
+    final bool hasSeenFormBanner = prefs.getBool('hasSeenFormBanner') ?? false;
 
-      if (!hasSeenBanner) {
-        setState(() => showBanner = true);
+    if (!hasSeenBanner) {
+      setState(() => showImageBanner = true);
+      widget.onVisibilityChanged(true);
 
-        // Hide the banner after 5 seconds
-        Future.delayed(const Duration(seconds: 5), () {
-          if (mounted) {
-            setState(() => showBanner = false);
-          }
-        });
+      Future.delayed(const Duration(seconds: 5), () {
+        if (mounted) {
+          setState(() => showImageBanner = false);
+          widget.onVisibilityChanged(false);
+          _showFormBanner();
+        }
+      });
 
-        // Mark banner as seen
-        await prefs.setBool('hasSeenBanner', true);
-      }
-    } catch (e) {
-      debugPrint("SharedPreferences Error: $e");
+      await prefs.setBool('hasSeenBanner', true);
+    } else if (!hasSeenFormBanner) {
+      _showFormBanner();
     }
   }
 
-  void closeBanner() {
-    setState(() => showBanner = false);
+  void _showFormBanner() {
+    setState(() => showFormBanner = true);
+    widget.onVisibilityChanged(true);
+  }
+
+  Future<void> _submitForm() async {
+    if (_formKey.currentState!.validate()) {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('hasSeenFormBanner', true);
+      setState(() => showFormBanner = false);
+      widget.onVisibilityChanged(false);
+    }
+  }
+
+  void _closeImageBannerEarly() {
+    setState(() => showImageBanner = false);
+    _showFormBanner();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (!showBanner) return const SizedBox.shrink();
-
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
+    if (!showImageBanner && !showFormBanner) return const SizedBox.shrink();
 
     return Stack(
       children: [
-        // Blurred Background
         Positioned.fill(
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
@@ -62,46 +79,101 @@ class _LoginBannerState extends State<LoginBanner> {
           ),
         ),
 
-        // Centered Banner
-        Center(
-          child: Stack(
-            children: [
-              Container(
-                width: screenWidth * 0.8,
-                height: screenHeight * 0.6,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  image: const DecorationImage(
-                    image: AssetImage('assets/carousel/index_1.jpg'),
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              ),
-
-              // Close Button
-              Positioned(
-                top: 4,
-                right: 4,
-                child: GestureDetector(
-                  onTap: closeBanner,
-                  child: Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                      border: Border.all(color: Colors.black, width: 2),
-                    ),
-                    child: const Icon(
-                      Icons.close,
-                      color: Colors.black,
-                      size: 16,
+        // 🖼️ Image Banner
+        if (showImageBanner)
+          Center(
+            child: Stack(
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  height: MediaQuery.of(context).size.height * 0.6,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    image: const DecorationImage(
+                      image: AssetImage('assets/carousel/index_1.jpg'),
+                      fit: BoxFit.fill,
                     ),
                   ),
                 ),
-              ),
-            ],
+                Positioned(
+                  top: 4,
+                  right: 4,
+                  child: GestureDetector(
+                    onTap: _closeImageBannerEarly,
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                        border: Border.all(color: Colors.black, width: 2),
+                      ),
+                      child: const Icon(
+                        Icons.close,
+                        size: 16,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
+
+        // 📝 Form Banner
+        if (showFormBanner)
+          Center(
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              margin: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              width: MediaQuery.of(context).size.width * 0.85,
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text(
+                      "Welcome! Please complete this form.",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      controller: departmentController,
+                      decoration: const InputDecoration(
+                        labelText: 'Department',
+                      ),
+                      validator:
+                          (value) =>
+                              value == null || value.isEmpty
+                                  ? 'Required'
+                                  : null,
+                    ),
+                    const SizedBox(height: 12),
+                    TextFormField(
+                      controller: locationController,
+                      decoration: const InputDecoration(labelText: 'Location'),
+                      validator:
+                          (value) =>
+                              value == null || value.isEmpty
+                                  ? 'Required'
+                                  : null,
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: _submitForm,
+                      child: const Text("Submit"),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
       ],
     );
   }

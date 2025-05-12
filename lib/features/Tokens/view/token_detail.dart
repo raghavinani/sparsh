@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sprash_arch/features/Appbar/top_appbar.dart';
+import 'package:sprash_arch/features/Sidebar/View/side_bar.dart';
 
 import 'token_report.dart';
 import 'token_summary.dart';
-
 
 class TokenDetailsPage extends StatelessWidget {
   final String activeTab;
@@ -14,6 +14,7 @@ class TokenDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(),
+      drawer: CustomSidebar(),
       body: Column(
         children: [
           _buildTopNav(context, activeTab),
@@ -25,14 +26,42 @@ class TokenDetailsPage extends StatelessWidget {
                   Expanded(
                     child: ListView(
                       children: [
-                        _buildTokenCard('08WX1NDVTPKB', '112473052',
-                            '12 Jan 2026', '35', '3.50', true, '256'),
-                        _buildTokenCard('15TY8BGFWCNH', '112425634',
-                            '12 Jan 2026', '35', '3.50', true, '123'),
                         _buildTokenCard(
-                            'XTR9PU5RXT00', '', '', '', '', false, ''),
-                        _buildTokenCard('15TY8BGFWCNH', '112425634',
-                            '12 Jan 2026', '35', '3.50', true, '123'),
+                          '08WX1NDVTPKB',
+                          '112473052',
+                          '12 Jan 2026',
+                          '35',
+                          '3.50',
+                          true,
+                          '256',
+                        ),
+                        _buildTokenCard(
+                          '15TY8BGFWCNH',
+                          '112425634',
+                          '12 Jan 2026',
+                          '35',
+                          '3.50',
+                          true,
+                          '123',
+                        ),
+                        _buildTokenCard(
+                          'XTR9PU5RXT00',
+                          '',
+                          '',
+                          '',
+                          '',
+                          false,
+                          '',
+                        ),
+                        _buildTokenCard(
+                          '15TY8BGFWCNH',
+                          '112425634',
+                          '12 Jan 2026',
+                          '35',
+                          '3.50',
+                          true,
+                          '123',
+                        ),
                       ],
                     ),
                   ),
@@ -58,25 +87,36 @@ class TokenDetailsPage extends StatelessWidget {
   Widget _buildTopNav(BuildContext context, String activeTab) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-          horizontal: 8, vertical: 4), // Add padding outside the border
+        horizontal: 8,
+        vertical: 4,
+      ), // Add padding outside the border
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.grey.shade300,
-            width: 1.0,
-          ),
+          border: Border.all(color: Colors.grey.shade300, width: 1.0),
           borderRadius: BorderRadius.circular(8.0),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _navItem(context, 'Details', activeTab == 'Details',
-                const TokenDetailsPage(activeTab: 'Details')),
-            _navItem(context, 'Report', activeTab == 'Report',
-                const TokenReportScreen(activeTab: 'Report')),
-            _navItem(context, 'Summary', activeTab == 'Summary',
-                const TokenSummaryScreen(activeTab: 'Summary')),
+            _navItem(
+              context,
+              'Details',
+              activeTab == 'Details',
+              const TokenDetailsPage(activeTab: 'Details'),
+            ),
+            _navItem(
+              context,
+              'Report',
+              activeTab == 'Report',
+              const TokenReportScreen(activeTab: 'Report'),
+            ),
+            _navItem(
+              context,
+              'Summary',
+              activeTab == 'Summary',
+              const TokenSummaryScreen(activeTab: 'Summary'),
+            ),
           ],
         ),
       ),
@@ -84,29 +124,39 @@ class TokenDetailsPage extends StatelessWidget {
   }
 
   Widget _navItem(
-      BuildContext context, String label, bool isActive, Widget targetPage) {
+    BuildContext context,
+    String label,
+    bool isActive,
+    Widget targetPage,
+  ) {
     return GestureDetector(
       onTap: () {
         if (!isActive) {
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (_) => targetPage));
+            context,
+            MaterialPageRoute(builder: (_) => targetPage),
+          );
         }
       },
       child: Container(
-        padding:
-            EdgeInsets.symmetric(horizontal: 16, vertical: 8), // Add padding
+        padding: EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 8,
+        ), // Add padding
         decoration: BoxDecoration(
-          color: isActive
-              ? Color.fromRGBO(0, 112, 183, 1)
-              : Colors.transparent, // Background color
+          color:
+              isActive
+                  ? Color.fromRGBO(0, 112, 183, 1)
+                  : Colors.transparent, // Background color
           borderRadius: BorderRadius.circular(8), // Optional: rounded corners
         ),
         child: Text(
           label,
           style: TextStyle(
-            color: isActive
-                ? Colors.white
-                : Colors.black, // White text when active
+            color:
+                isActive
+                    ? Colors.white
+                    : Colors.black, // White text when active
             fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
             fontSize: 16,
           ),
@@ -115,8 +165,15 @@ class TokenDetailsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildTokenCard(String token, String id, String date, String value,
-      String handling, bool isValid, String pin) {
+  Widget _buildTokenCard(
+    String token,
+    String id,
+    String date,
+    String value,
+    String handling,
+    bool isValid,
+    String pin,
+  ) {
     return Card(
       shape: RoundedRectangleBorder(
         side: BorderSide(color: Colors.grey.shade300),
@@ -128,8 +185,10 @@ class TokenDetailsPage extends StatelessWidget {
         children: [
           Container(
             width: double.infinity,
-            padding:
-                const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 12.0,
+              vertical: 6.0,
+            ),
             decoration: BoxDecoration(
               color: isValid ? Colors.blue : Colors.red,
               borderRadius: BorderRadius.circular(5.0),
@@ -137,9 +196,10 @@ class TokenDetailsPage extends StatelessWidget {
             child: Text(
               token,
               style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white),
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
             ),
           ),
           Container(
@@ -149,97 +209,124 @@ class TokenDetailsPage extends StatelessWidget {
               color: Colors.white,
               // borderRadius: BorderRadius.circular(5.0),
             ),
-            child: isValid
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(id,
+            child:
+                isValid
+                    ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          id,
                           style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold)),
-                      Text('Valid Upto - $date',
-                          style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold)),
-                      Text(
-                        'Value To Pay - $value',
-                        style: const TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Handling - $handling',
-                              style: const TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold)),
-                          Row(
-                            children: [
-                              const Text('PIN',
-                                  style: TextStyle(color: Colors.grey)),
-                              const SizedBox(width: 5),
-                              Container(
-                                width: 50,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.blue),
-                                  borderRadius: BorderRadius.circular(5.0),
-                                ),
-                                alignment: Alignment.center,
-                                child: Text(pin,
-                                    style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold)),
-                              ),
-                            ],
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
                           ),
-                        ],
-                      ),
-                      const SizedBox(height: 4),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
-                        decoration: BoxDecoration(
-                          color: Colors.green,
-                          borderRadius: BorderRadius.circular(4),
                         ),
-                        child: const Text(
-                          'Accepted',
-                          style: TextStyle(color: Colors.white),
+                        Text(
+                          'Valid Upto - $date',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ],
-                  )
-                : Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text('Error - XTR9PU5RXT00',
+                        Text(
+                          'Value To Pay - $value',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Handling - $handling',
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                const Text(
+                                  'PIN',
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                                const SizedBox(width: 5),
+                                Container(
+                                  width: 50,
+                                  height: 30,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.blue),
+                                    borderRadius: BorderRadius.circular(5.0),
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    pin,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 4),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.green,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: const Text(
+                            'Accepted',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ],
+                    )
+                    : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Error - XTR9PU5RXT00',
                           style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.red)),
-                      const Text(
-                        'Please check with IT or Company Officer',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 8),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(4),
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red,
+                          ),
                         ),
-                        child: const Text(
-                          'Rejected',
-                          style: TextStyle(color: Colors.white),
+                        const Text(
+                          'Please check with IT or Company Officer',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
+                        const SizedBox(height: 8),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: const Text(
+                            'Rejected',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ],
+                    ),
           ),
         ],
       ),
     );
   }
-
- 
 }

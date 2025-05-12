@@ -5,10 +5,6 @@ import 'package:sprash_arch/features/Tokens/view/token_detail.dart';
 import 'package:sprash_arch/features/Tokens/view/token_summary.dart';
 import 'package:sprash_arch/features/home/view/home_page.dart';
 
-
-
-
-
 class TokenScanPage extends StatefulWidget {
   const TokenScanPage({super.key});
 
@@ -24,8 +20,10 @@ class _TokenScanPageState extends State<TokenScanPage> {
   int _remainingAttempts = 3;
   final TextEditingController _pinController = TextEditingController();
   bool _isTorchOn = false;
-  final List<TextEditingController> pinControllers =
-      List.generate(3, (_) => TextEditingController());
+  final List<TextEditingController> pinControllers = List.generate(
+    3,
+    (_) => TextEditingController(),
+  );
   List<FocusNode> pinFocusNodes = List.generate(3, (_) => FocusNode());
 
   final List<TokenCard> _predefinedCards = [
@@ -133,12 +131,30 @@ class _TokenScanPageState extends State<TokenScanPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    // Lock orientation to portrait
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  }
+
+  @override
   void dispose() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
     _cameraController.dispose();
     super.dispose();
   }
 
   void _showPinDialog() {
+    for (var controller in pinControllers) {
+      controller.clear();
+    }
+    _pinValidationMessage = null;
+
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -152,7 +168,9 @@ class _TokenScanPageState extends State<TokenScanPage> {
                   child: Container(
                     margin: const EdgeInsets.symmetric(horizontal: 10),
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 10),
+                      horizontal: 20,
+                      vertical: 10,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(24),
@@ -165,11 +183,14 @@ class _TokenScanPageState extends State<TokenScanPage> {
                       children: [
                         Container(
                           padding: const EdgeInsets.symmetric(
-                              vertical: 6, horizontal: 12),
+                            vertical: 6,
+                            horizontal: 12,
+                          ),
                           decoration: BoxDecoration(
-                            color: _isTokenValid
-                                ? Colors.green.shade300
-                                : Colors.red.shade300,
+                            color:
+                                _isTokenValid
+                                    ? Colors.green.shade300
+                                    : Colors.red.shade300,
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Text(
@@ -187,7 +208,9 @@ class _TokenScanPageState extends State<TokenScanPage> {
                         const Text("Token No.", style: TextStyle(fontSize: 18)),
                         Container(
                           padding: const EdgeInsets.symmetric(
-                              vertical: 6, horizontal: 12),
+                            vertical: 6,
+                            horizontal: 12,
+                          ),
                           margin: const EdgeInsets.only(top: 4),
                           decoration: BoxDecoration(
                             color: Colors.grey.shade300,
@@ -196,12 +219,16 @@ class _TokenScanPageState extends State<TokenScanPage> {
                           child: Text(
                             _scannedValue ?? '',
                             style: const TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                         const SizedBox(height: 16),
-                        const Text("Enter Pin Code :",
-                            style: TextStyle(fontSize: 18)),
+                        const Text(
+                          "Enter Pin Code :",
+                          style: TextStyle(fontSize: 18),
+                        ),
                         const SizedBox(height: 12),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -217,8 +244,9 @@ class _TokenScanPageState extends State<TokenScanPage> {
                                       pinControllers[index].text.isEmpty &&
                                       index > 0) {
                                     pinControllers[index - 1].clear();
-                                    FocusScope.of(context)
-                                        .requestFocus(pinFocusNodes[index - 1]);
+                                    FocusScope.of(
+                                      context,
+                                    ).requestFocus(pinFocusNodes[index - 1]);
                                   }
                                   return KeyEventResult.ignored;
                                 },
@@ -230,13 +258,15 @@ class _TokenScanPageState extends State<TokenScanPage> {
                                   maxLength: 1,
                                   obscureText: true,
                                   autofocus: index == 0,
-                                  decoration:
-                                      const InputDecoration(counterText: ''),
+                                  decoration: const InputDecoration(
+                                    counterText: '',
+                                  ),
                                   onChanged: (value) {
                                     if (value.isNotEmpty &&
                                         index < pinControllers.length - 1) {
-                                      FocusScope.of(context).requestFocus(
-                                          pinFocusNodes[index + 1]);
+                                      FocusScope.of(
+                                        context,
+                                      ).requestFocus(pinFocusNodes[index + 1]);
                                     }
                                   },
                                 ),
@@ -248,10 +278,11 @@ class _TokenScanPageState extends State<TokenScanPage> {
                         Text(
                           _pinValidationMessage ?? '',
                           style: TextStyle(
-                            color: _pinValidationMessage != null &&
-                                    _pinValidationMessage!.contains('❌')
-                                ? Colors.red
-                                : Colors.green,
+                            color:
+                                _pinValidationMessage != null &&
+                                        _pinValidationMessage!.contains('❌')
+                                    ? Colors.red
+                                    : Colors.green,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -272,8 +303,9 @@ class _TokenScanPageState extends State<TokenScanPage> {
                                 for (var c in pinControllers) {
                                   c.clear();
                                 }
-                                FocusScope.of(context)
-                                    .requestFocus(pinFocusNodes[0]);
+                                FocusScope.of(
+                                  context,
+                                ).requestFocus(pinFocusNodes[0]);
                               }
                             } else {
                               setState(() {
@@ -283,7 +315,9 @@ class _TokenScanPageState extends State<TokenScanPage> {
                           },
                           style: ElevatedButton.styleFrom(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 24, vertical: 12),
+                              horizontal: 24,
+                              vertical: 12,
+                            ),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(24),
                             ),
@@ -311,20 +345,21 @@ class _TokenScanPageState extends State<TokenScanPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Token Scan'),
-        backgroundColor: Colors.white,
+        // backgroundColor: Colors.white,
         leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              dispose();
-              if (Navigator.canPop(context)) {
-                Navigator.pop(context);
-              } else {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const HomePage()),
-                );
-              }
-            }),
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            dispose();
+            if (Navigator.canPop(context)) {
+              Navigator.pop(context);
+            } else {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const HomePage()),
+              );
+            }
+          },
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -390,17 +425,9 @@ class _TokenScanPageState extends State<TokenScanPage> {
               ),
             ),
             const SizedBox(height: 10),
-            Text(
-              'Scan a token',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            Text('Scan a token', style: TextStyle(fontWeight: FontWeight.bold)),
             const SizedBox(height: 10),
-            Container(
-              height: 1,
-              color: Colors.grey.shade300,
-            ),
+            Container(height: 1, color: Colors.grey.shade300),
             const SizedBox(height: 8),
             _buildTopNav(context, 'Details'),
             const SizedBox(height: 8),
@@ -434,10 +461,18 @@ class _TokenScanPageState extends State<TokenScanPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _navItem(context, 'Details', activeTab == 'Details',
-                const TokenDetailsPage(activeTab: 'Details')),
-            _navItem(context, 'Summary', activeTab == 'Summary',
-                const TokenSummaryScreen(activeTab: 'Summary')),
+            _navItem(
+              context,
+              'Details',
+              activeTab == 'Details',
+              const TokenDetailsPage(activeTab: 'Details'),
+            ),
+            _navItem(
+              context,
+              'Summary',
+              activeTab == 'Summary',
+              const TokenSummaryScreen(activeTab: 'Summary'),
+            ),
           ],
         ),
       ),
@@ -445,7 +480,11 @@ class _TokenScanPageState extends State<TokenScanPage> {
   }
 
   Widget _navItem(
-      BuildContext context, String label, bool isActive, Widget targetPage) {
+    BuildContext context,
+    String label,
+    bool isActive,
+    Widget targetPage,
+  ) {
     return GestureDetector(
       onTap: () {
         if (!isActive) {
@@ -458,9 +497,10 @@ class _TokenScanPageState extends State<TokenScanPage> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: isActive
-              ? const Color.fromRGBO(0, 112, 183, 1)
-              : Colors.transparent,
+          color:
+              isActive
+                  ? const Color.fromRGBO(0, 112, 183, 1)
+                  : Colors.transparent,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Text(
@@ -527,9 +567,10 @@ class _TokenCardState extends State<TokenCard> {
                   Text(
                     widget.token,
                     style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold),
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   Icon(
                     isExpanded ? Icons.expand_less : Icons.expand_more,
@@ -544,75 +585,84 @@ class _TokenCardState extends State<TokenCard> {
               width: double.infinity,
               padding: const EdgeInsets.all(12),
               color: Colors.white,
-              child: widget.isValid
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('ID: ${widget.id}'),
-                        Text('Valid Upto: ${widget.date}'),
-                        Text('Value To Pay: ₹${widget.value}'),
-                        Text('Handling: ₹${widget.handling}'),
-                        Row(
-                          children: [
-                            const Text('PIN: '),
-                            Container(
-                              width: 50,
-                              height: 30,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.blue),
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: Text(widget.pin,
+              child:
+                  widget.isValid
+                      ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('ID: ${widget.id}'),
+                          Text('Valid Upto: ${widget.date}'),
+                          Text('Value To Pay: ₹${widget.value}'),
+                          Text('Handling: ₹${widget.handling}'),
+                          Row(
+                            children: [
+                              const Text('PIN: '),
+                              Container(
+                                width: 50,
+                                height: 30,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.blue),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                child: Text(
+                                  widget.pin,
                                   style: const TextStyle(
-                                      fontWeight: FontWeight.bold)),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 4),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 4,
                             ),
-                          ],
-                        ),
-                        const SizedBox(height: 4),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 4),
-                          decoration: BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.circular(4),
+                            decoration: BoxDecoration(
+                              color: Colors.green,
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: const Text(
+                              'Accepted',
+                              style: TextStyle(color: Colors.white),
+                            ),
                           ),
-                          child: const Text(
-                            'Accepted',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ],
-                    )
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Error - ${widget.token}',
+                        ],
+                      )
+                      : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Error - ${widget.token}',
                             style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.red)),
-                        const Text(
-                          'Please check with IT or Company Officer',
-                          style: TextStyle(
-                            fontSize: 16,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.red,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 8),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 4),
-                          decoration: BoxDecoration(
-                            color: Colors.red,
-                            borderRadius: BorderRadius.circular(4),
+                          const Text(
+                            'Please check with IT or Company Officer',
+                            style: TextStyle(fontSize: 16),
                           ),
-                          child: const Text(
-                            'Rejected',
-                            style: TextStyle(color: Colors.white),
+                          const SizedBox(height: 8),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 4,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: const Text(
+                              'Rejected',
+                              style: TextStyle(color: Colors.white),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
+                        ],
+                      ),
             ),
         ],
       ),

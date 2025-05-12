@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'package:dio/dio.dart';
-
 import '../services/dio_client.dart';
 
 class ApiService {
@@ -97,7 +95,7 @@ class ApiService {
       throw Exception('Error sending data: $e');
     }
   }
-// can be used to get a distinct column values 
+  // can be used to get a distinct column values
   // Future<List<String>> getDistinctValues(String columnName) async {
   //   try {
   //     final response = await dioClient.dio.get("$baseUrl/distinct/$columnName");
@@ -110,9 +108,7 @@ class ApiService {
   //   }
   // }
 
-
-
-//   get the States that are preloaded in the registration report 
+  //   get the States that are preloaded in the registration report
   Future<List<String>> getStates() async {
     try {
       print('Attempting to fetch states from: $baseUrl/getstates');
@@ -153,8 +149,7 @@ class ApiService {
     }
   }
 
-
-// Get the distinct Districts for a state the user selects
+  // Get the distinct Districts for a state the user selects
   Future<List<String>> getAreas(String state) async {
     try {
       final response = await dioClient.dio.get(
@@ -175,8 +170,7 @@ class ApiService {
     }
   }
 
-
-// get the areacode that coresponds to States
+  // get the areacode that coresponds to States
   Future<String> getAreaCode(String area) async {
     try {
       final response = await dioClient.dio.get(
@@ -201,9 +195,4 @@ class ApiService {
       throw Exception('Error fetching area code: $e');
     }
   }
-
-
-
-
-  
 }

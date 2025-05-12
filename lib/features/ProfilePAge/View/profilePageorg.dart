@@ -6,7 +6,6 @@ import 'package:sprash_arch/features/home/view/home_page.dart';
 
 import '../../widgets/custom_fields.dart';
 
-
 class ProfilePage2 extends StatelessWidget {
   const ProfilePage2({super.key});
   @override
@@ -36,7 +35,10 @@ class ProfilePage2 extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: customBottomNavigationBar(context: context, currentIndex: 0),
+      bottomNavigationBar: customBottomNavigationBar(
+        context: context,
+        currentIndex: 0,
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,23 +104,27 @@ class ProfilePage2 extends StatelessWidget {
                   buildTextField(label: 'Email Address*'),
                   buildNumberField(label: 'Phone Number*'),
                   _sectionTitle('Dashboard Report'),
-                  buildDropdownField(label: 'Select Report*', items: [
-                    'Sales Summary',
-                    'DSR Visit',
-                    'Token Scan',
-                  ]),
+                  buildDropdownField(
+                    label: 'Select Report*',
+                    items: ['Sales Summary', 'DSR Visit', 'Token Scan'],
+                  ),
                   _sectionTitle('Personal Info'),
-                  buildDropdownField(label: 'Gender*', items:  ['Male', 'Female', 'Other']),
+                  buildDropdownField(
+                    label: 'Gender*',
+                    items: ['Male', 'Female', 'Other'],
+                  ),
                   buildTextField(label: 'Address*'),
 
                   Consumer(
                     builder: (context, ref, child) {
-                      return  gradientbutton(text: "Logout", onPressed: () async{await _logoutcheck(context,ref);});
-                         
+                      return gradientbutton(
+                        text: "Logout",
+                        onPressed: () async {
+                          await _logoutcheck(context, ref);
                         },
-                      
-                  
-                      ),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),
@@ -156,26 +162,29 @@ class ProfilePage2 extends StatelessWidget {
   }
 }
 
-Future _logoutcheck(BuildContext context, WidgetRef ref){
+Future _logoutcheck(BuildContext context, WidgetRef ref) {
+  return showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Are you sure you want to logout?'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              final logoutService = ref.read(logoutServiceProvider);
+              logoutService.logout(context, ref);
+            },
 
-return showDialog(context: context,
- builder:(BuildContext context) {return AlertDialog(
-  title: Text('Are you sure you want to logout?'),
-  actions: [
-    TextButton(onPressed: (){
-
-      Navigator.pop(context);
-    }, child: Text('Cancel')),
-    TextButton(onPressed: (){
-      final logoutService = ref.read(logoutServiceProvider);
-                          logoutService.logout(context, ref);
-                        
+            child: Text('Logout'),
+          ),
+        ],
+      );
     },
-    
-     child: Text('Logout'))
-  ],
- );
+  );
 }
-);
- 
- }
