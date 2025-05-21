@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sprash_arch/core/constants/theme.dart';
-import 'package:sprash_arch/features/home/models/home_modal.dart';
-import 'package:sprash_arch/features/home/viewModal/tab_grid.dart';
+import 'package:sparsh/core/constants/theme.dart';
+import 'package:sparsh/features/home/models/home_modal.dart';
+import 'package:sparsh/features/home/viewModal/tab_grid.dart';
 
 class HomeTabs extends StatefulWidget {
   const HomeTabs(int selectedTabIndex, {super.key});

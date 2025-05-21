@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:sprash_arch/core/constants/theme.dart';
-import 'package:sprash_arch/features/Screens/Notifications.dart';
-import 'package:sprash_arch/features/Screens/dsr_Visit.dart';
-import 'package:sprash_arch/features/Screens/exportPage.dart';
-import 'package:sprash_arch/features/Screens/salesDashboard.dart';
-import 'package:sprash_arch/features/home/models/home_modal.dart';
+import 'package:sparsh/core/constants/theme.dart';
+import 'package:sparsh/features/Screens/Notifications.dart';
+import 'package:sparsh/features/Screens/dsr_Visit.dart';
+import 'package:sparsh/features/Screens/exportPage.dart';
+import 'package:sparsh/features/Screens/salesDashboard.dart';
+import 'package:sparsh/features/home/models/home_modal.dart';
 
 // function to build the grid for a given tab index
 Widget buildGridForTab(int tabIndex, BuildContext context) {

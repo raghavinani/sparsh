@@ -1,16 +1,14 @@
-
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sprash_arch/DataLayer/modals/role_menu_data.dart';
-import 'package:sprash_arch/core/constants/theme.dart';
-import 'package:sprash_arch/features/Screens/Notifications.dart';
-import 'package:sprash_arch/features/Login/viewModal/login_viewmodal.dart';
+import 'package:sparsh/DataLayer/modals/role_menu_data.dart';
+import 'package:sparsh/core/constants/theme.dart';
+import 'package:sparsh/features/Screens/Notifications.dart';
+import 'package:sparsh/features/Login/viewModal/login_viewmodal.dart';
 
 import '../home/view/home_page.dart';
 import 'Modals/menu_model.dart';
 import 'search.dart';
-
 
 class CustomAppBar extends ConsumerStatefulWidget
     implements PreferredSizeWidget {
@@ -28,7 +26,7 @@ class _CustomAppBarState extends ConsumerState<CustomAppBar> {
   AppTheme appTheme = AppTheme();
   RoleMenu? _menuData;
   LoginViewModel? _loginViewModel;
-final loginViewModelProvider = Provider((ref) => LoginViewModel(ref));
+  final loginViewModelProvider = Provider((ref) => LoginViewModel(ref));
   @override
   void initState() {
     super.initState();
@@ -38,12 +36,12 @@ final loginViewModelProvider = Provider((ref) => LoginViewModel(ref));
   void _initializeMenuData() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
-      _loginViewModel = ref.read( loginViewModelProvider);
+      _loginViewModel = ref.read(loginViewModelProvider);
       if (_loginViewModel == null) return;
-      
+
       final userRole = ref.read(_loginViewModel!.userRoleProvider);
       if (userRole == null) return;
-      
+
       setState(() {
         _menuData = menuData[userRole] ?? menuData['custm']!;
       });
@@ -54,7 +52,10 @@ final loginViewModelProvider = Provider((ref) => LoginViewModel(ref));
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     double appBarHeight = isSearchActive ? 100 : 50;
-     final showBanner = _loginViewModel != null ? ref.watch(_loginViewModel!.showBannerProvider) : false;
+    final showBanner =
+        _loginViewModel != null
+            ? ref.watch(_loginViewModel!.showBannerProvider)
+            : false;
 
     return Container(
       color: Colors.white,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sprash_arch/features/Login/view/login_page.dart';
-import 'package:sprash_arch/features/Login/viewModal/login_viewmodal.dart';
+import 'package:sparsh/features/Login/view/login_page.dart';
+import 'package:sparsh/features/Login/viewModal/login_viewmodal.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../core/constants/secure_storage.dart';
 

@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sprash_arch/core/constants/theme.dart';
-import 'package:sprash_arch/features/Login/repository/pass_reset.dart';
-
-
-
-
+import 'package:sparsh/core/constants/theme.dart';
+import 'package:sparsh/features/Login/repository/pass_reset.dart';
 
 final passwordResetServiceProvider = Provider<PasswordResetService>(
   (ref) => PasswordResetService(),

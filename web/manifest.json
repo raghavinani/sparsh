@@ -1,6 +1,6 @@
 {
-    "name": "sprash_arch",
-    "short_name": "sprash_arch",
+    "name": "sparsh",
+    "short_name": "sparsh",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

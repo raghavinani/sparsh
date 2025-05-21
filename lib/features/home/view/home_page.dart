@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:sprash_arch/features/Banner/bannerLogin.dart';
-import 'package:sprash_arch/features/Carousal/carousal.dart';
-import 'package:sprash_arch/features/Sidebar/View/side_bar.dart';
-import 'package:sprash_arch/features/bottombar/bottombar_widget.dart';
-import 'package:sprash_arch/features/home/models/home_modal.dart';
-import 'package:sprash_arch/features/home/view/home_tabs.dart';
-import 'package:sprash_arch/features/home/view/mostused.dart';
-import 'package:sprash_arch/features/home/viewModal/tab_grid.dart';
+import 'package:sparsh/features/Banner/bannerLogin.dart';
+import 'package:sparsh/features/Carousal/carousal.dart';
+import 'package:sparsh/features/Sidebar/View/side_bar.dart';
+import 'package:sparsh/features/bottombar/bottombar_widget.dart';
+import 'package:sparsh/features/home/models/home_modal.dart';
+import 'package:sparsh/features/home/view/home_tabs.dart';
+import 'package:sparsh/features/home/view/mostused.dart';
+import 'package:sparsh/features/home/viewModal/tab_grid.dart';
 
 import '../../Appbar/top_appbar.dart';
 

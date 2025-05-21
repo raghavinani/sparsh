@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sprash_arch/core/constants/theme.dart';
-import 'package:sprash_arch/features/Screens/dsr_Visit.dart';
-import 'package:sprash_arch/features/Tokens/view/token_detail.dart';
-import 'package:sprash_arch/features/Tokens/view/token_scan.dart';
-import 'package:sprash_arch/features/home/viewModal/tab_grid.dart';
+import 'package:sparsh/core/constants/theme.dart';
+import 'package:sparsh/features/Screens/dsr_Visit.dart';
+import 'package:sparsh/features/Tokens/view/token_detail.dart';
+import 'package:sparsh/features/Tokens/view/token_scan.dart';
+import 'package:sparsh/features/home/viewModal/tab_grid.dart';
 
 class MostlyUsedApps extends StatelessWidget {
   final List<Map<String, dynamic>> apps;

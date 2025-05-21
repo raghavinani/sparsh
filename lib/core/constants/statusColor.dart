@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sprash_arch/core/constants/theme.dart';
-
-
+import 'package:sparsh/core/constants/theme.dart';
 
 class StatusColorWidget extends StatelessWidget {
   final String status;

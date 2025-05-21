@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sprash_arch/DataLayer/services/logout_service.dart';
-import 'package:sprash_arch/features/bottombar/bottombar_widget.dart';
-import 'package:sprash_arch/features/home/view/home_page.dart';
+import 'package:sparsh/DataLayer/services/logout_service.dart';
+import 'package:sparsh/features/bottombar/bottombar_widget.dart';
+import 'package:sparsh/features/home/view/home_page.dart';
 
 import '../../widgets/custom_fields.dart';
 

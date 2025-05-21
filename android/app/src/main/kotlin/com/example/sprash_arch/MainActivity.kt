@@ -1,4 +1,4 @@
-package com.example.sprash_arch
+package com.example.sparsh
 
 import io.flutter.embedding.android.FlutterActivity
 

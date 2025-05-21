@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:sprash_arch/features/bottombar/bottomNavAnimation.dart';
-import 'package:sprash_arch/features/bottombar/modal_bottom.dart';
+import 'package:sparsh/features/bottombar/bottomNavAnimation.dart';
+import 'package:sparsh/features/bottombar/modal_bottom.dart';
 
 // Import your actual pages
-import 'package:sprash_arch/features/ProfilePAge/View/profilePageorg.dart';
-import 'package:sprash_arch/features/Screens/dsr_Visit.dart';
-import 'package:sprash_arch/features/Screens/exportPage.dart';
-import 'package:sprash_arch/features/home/view/home_page.dart';
+import 'package:sparsh/features/ProfilePAge/View/profilePageorg.dart';
+import 'package:sparsh/features/Screens/dsr_Visit.dart';
+import 'package:sparsh/features/Screens/exportPage.dart';
+import 'package:sparsh/features/home/view/home_page.dart';
 
 Widget customBottomNavigationBar({
   required BuildContext context,
@@ -54,24 +54,39 @@ Widget customBottomNavigationBar({
       durationAnimation: durationAnimation,
       items: [
         ItemNavigationView(
-          childAfter:
-              const Icon(Icons.person_rounded, color: Colors.blue, size: 30),
-          childBefore:
-              Icon(Icons.person_outlined, color: Colors.black, size: 30),
+          childAfter: const Icon(
+            Icons.person_rounded,
+            color: Colors.blue,
+            size: 30,
+          ),
+          childBefore: Icon(
+            Icons.person_outlined,
+            color: Colors.black,
+            size: 30,
+          ),
         ),
         ItemNavigationView(
-          childAfter:
-              const Icon(Icons.mail_rounded, color: Colors.blue, size: 30),
+          childAfter: const Icon(
+            Icons.mail_rounded,
+            color: Colors.blue,
+            size: 30,
+          ),
           childBefore: Icon(Icons.mail_outlined, color: Colors.black, size: 30),
         ),
         ItemNavigationView(
-          childAfter:
-              const Icon(Icons.task_rounded, color: Colors.blue, size: 30),
+          childAfter: const Icon(
+            Icons.task_rounded,
+            color: Colors.blue,
+            size: 30,
+          ),
           childBefore: Icon(Icons.task_outlined, color: Colors.black, size: 30),
         ),
         ItemNavigationView(
-          childAfter:
-              const Icon(Icons.home_rounded, color: Colors.blue, size: 30),
+          childAfter: const Icon(
+            Icons.home_rounded,
+            color: Colors.blue,
+            size: 30,
+          ),
           childBefore: Icon(Icons.home_outlined, color: Colors.black, size: 30),
         ),
       ],

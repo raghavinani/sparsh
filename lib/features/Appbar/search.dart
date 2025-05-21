@@ -1,7 +1,6 @@
-
 import 'package:flutter/material.dart';
-import 'package:sprash_arch/features/Screens/exportPage.dart';
-import 'package:sprash_arch/features/Tokens/view/token_scan.dart';
+import 'package:sparsh/features/Screens/exportPage.dart';
+import 'package:sparsh/features/Tokens/view/token_scan.dart';
 
 import '../Screens/dsr_Visit.dart';
 import '../Screens/salesDashboard.dart';
@@ -9,8 +8,6 @@ import '../Tokens/view/token_detail.dart';
 import '../Tokens/view/token_report.dart';
 import '../Tokens/view/token_summary.dart';
 import 'Modals/app_links.dart';
-
-
 
 class SearchBarWidget extends StatefulWidget {
   SearchBarWidget({super.key});
@@ -65,9 +62,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
     if (value == 'Retailer Registration') {
       Navigator.push(
         context,
-        MaterialPageRoute(
-          builder: (context) => const Excelpage(),
-        ),
+        MaterialPageRoute(builder: (context) => const Excelpage()),
       );
     } else if (value == 'Token Scan') {
       Navigator.push(
@@ -89,16 +84,16 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
         context,
         MaterialPageRoute(builder: (context) => const TokenSummaryScreen()),
       );
-    // } else if (value == 'Order Update') {
-    //   Navigator.push(
-    //     context,
-    //     MaterialPageRoute(builder: (context) => const OrderUpdate()),
-    //   );
-    // } else if (value == 'Order Entry') {
-    //   Navigator.push(
-    //     context,
-    //     MaterialPageRoute(builder: (context) => const OrderEntry()),
-    //   );
+      // } else if (value == 'Order Update') {
+      //   Navigator.push(
+      //     context,
+      //     MaterialPageRoute(builder: (context) => const OrderUpdate()),
+      //   );
+      // } else if (value == 'Order Entry') {
+      //   Navigator.push(
+      //     context,
+      //     MaterialPageRoute(builder: (context) => const OrderEntry()),
+      //   );
     } else if (value == 'Sales Report') {
       Navigator.push(
         context,
@@ -231,8 +226,8 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const TokenScanPage()),
-                    
+                      builder: (context) => const TokenScanPage(),
+                    ),
                   );
                 },
               ),

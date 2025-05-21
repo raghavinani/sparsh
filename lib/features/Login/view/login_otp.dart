@@ -1,10 +1,8 @@
-
 import 'package:flutter/material.dart';
 
 import '../../../core/constants/theme.dart';
 import '../widgets/footer.dart';
 import 'login_page.dart';
-
 
 class LoginWithOtp extends StatefulWidget {
   const LoginWithOtp({super.key});

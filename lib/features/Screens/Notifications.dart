@@ -1,13 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sprash_arch/core/constants/theme.dart';
-import 'package:sprash_arch/features/Appbar/top_appbar.dart';
-import 'package:sprash_arch/features/Screens/Modal/notification_modal.dart';
-import 'package:sprash_arch/features/Sidebar/View/side_bar.dart';
-import 'package:sprash_arch/features/bottombar/bottombar_widget.dart';
-
-
+import 'package:sparsh/core/constants/theme.dart';
+import 'package:sparsh/features/Appbar/top_appbar.dart';
+import 'package:sparsh/features/Screens/Modal/notification_modal.dart';
+import 'package:sparsh/features/Sidebar/View/side_bar.dart';
+import 'package:sparsh/features/bottombar/bottombar_widget.dart';
 
 // Updated NotificationsScreen with sample data
 class NotificationsScreen extends ConsumerStatefulWidget {
@@ -48,7 +45,10 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
     return Scaffold(
       appBar: CustomAppBar(),
       drawer: CustomSidebar(),
-      bottomNavigationBar: customBottomNavigationBar(context: context, currentIndex: 5),
+      bottomNavigationBar: customBottomNavigationBar(
+        context: context,
+        currentIndex: 5,
+      ),
 
       body:
           notifications.isEmpty

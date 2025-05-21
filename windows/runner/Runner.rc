@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "sprash_arch" "\0"
+            VALUE "FileDescription", "sparsh" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "sprash_arch" "\0"
+            VALUE "InternalName", "sparsh" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2025 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "sprash_arch.exe" "\0"
-            VALUE "ProductName", "sprash_arch" "\0"
+            VALUE "OriginalFilename", "sparsh.exe" "\0"
+            VALUE "ProductName", "sparsh" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

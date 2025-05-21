@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:sprash_arch/core/constants/theme.dart';
-
-
+import 'package:sparsh/core/constants/theme.dart';
 
 class CustomCarousel extends StatefulWidget {
   const CustomCarousel({super.key});

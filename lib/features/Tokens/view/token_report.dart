@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:sprash_arch/features/Appbar/top_appbar.dart';
-import 'package:sprash_arch/features/Sidebar/View/side_bar.dart';
+import 'package:sparsh/features/Appbar/top_appbar.dart';
+import 'package:sparsh/features/Sidebar/View/side_bar.dart';
 
 import 'token_detail.dart';
 import 'token_summary.dart';

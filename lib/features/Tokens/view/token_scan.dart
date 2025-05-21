@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:flutter/services.dart';
-import 'package:sprash_arch/features/Tokens/view/token_detail.dart';
-import 'package:sprash_arch/features/Tokens/view/token_summary.dart';
-import 'package:sprash_arch/features/home/view/home_page.dart';
+import 'package:sparsh/features/Tokens/view/token_detail.dart';
+import 'package:sparsh/features/Tokens/view/token_summary.dart';
+import 'package:sparsh/features/home/view/home_page.dart';
 
 class TokenScanPage extends StatefulWidget {
   const TokenScanPage({super.key});

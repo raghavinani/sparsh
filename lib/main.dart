@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sprash_arch/features/Login/view/splash_screen.dart';
-import 'package:sprash_arch/features/bottombar/try.dart';
-import 'package:sprash_arch/features/home/view/home_page.dart';
-
+import 'package:sparsh/features/Login/view/splash_screen.dart';
 import 'core/constants/secure_storage.dart';
 import 'core/constants/theme.dart' as sparsh;
 import 'features/Login/view/login_page.dart';
 
-
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();//You only need to call this method if you need the binding to be initialized before calling [runApp].
+  WidgetsFlutterBinding.ensureInitialized(); //You only need to call this method if you need the binding to be initialized before calling [runApp].
   // DioClient();
   // Preload the font
   await GoogleFonts.pendingFonts([GoogleFonts.poppins()]);
@@ -44,7 +40,7 @@ class _SparshAppState extends ConsumerState<SparshApp> {
         // If logged in, go to ContentPage, otherwise go to MyLogin
         _initialPage =
             (storedEmail != null && storedPassword != null)
-                ?  SplashScreen()
+                ? SplashScreen()
                 : const MyLogin();
       });
     }
@@ -63,7 +59,7 @@ class _SparshAppState extends ConsumerState<SparshApp> {
 
     return MaterialApp(
       title: 'SPARSH',
-      debugShowCheckedModeBanner: false, // removes the depug tag in the top 
+      debugShowCheckedModeBanner: false, // removes the depug tag in the top
       theme: currentTheme.toThemeData(),
       home: MyLogin(),
     );

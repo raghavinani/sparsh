@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sprash_arch/DataLayer/Datacalls/LoginApi.dart';
-import 'package:sprash_arch/core/constants/secure_storage.dart';
-import 'package:sprash_arch/core/constants/theme.dart';
-import 'package:sprash_arch/features/Login/view/forgetpass.dart';
-import 'package:sprash_arch/features/Login/viewModal/login_viewmodal.dart';
-import 'package:sprash_arch/features/Login/widgets/custom_text_field.dart';
+import 'package:sparsh/DataLayer/Datacalls/LoginApi.dart';
+import 'package:sparsh/core/constants/secure_storage.dart';
+import 'package:sparsh/core/constants/theme.dart';
+import 'package:sparsh/features/Login/view/forgetpass.dart';
+import 'package:sparsh/features/Login/viewModal/login_viewmodal.dart';
+import 'package:sparsh/features/Login/widgets/custom_text_field.dart';
 
 import '../widgets/footer.dart';
 import 'login_otp.dart';
 
-
-
 // Secure storage provider
 final secureStorageProvider = Provider<SecureStorage>((ref) => SecureStorage());
-
 
 class MyLogin extends ConsumerStatefulWidget {
   const MyLogin({super.key});
@@ -28,7 +25,7 @@ class _MyLoginState extends ConsumerState<MyLogin>
   late AnimationController _animationController;
 
   final service = LoginService();
-final loginViewModelProvider = Provider((ref) => LoginViewModel(ref));
+  final loginViewModelProvider = Provider((ref) => LoginViewModel(ref));
 
   late Animation<Offset> _animation2;
 
@@ -40,10 +37,9 @@ final loginViewModelProvider = Provider((ref) => LoginViewModel(ref));
     super.initState();
     _setupAnimations();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(loginViewModelProvider).loadStoredCredentials(
-            _idController,
-            _passwordController,
-          );
+      ref
+          .read(loginViewModelProvider)
+          .loadStoredCredentials(_idController, _passwordController);
     });
   }
 
@@ -63,7 +59,6 @@ final loginViewModelProvider = Provider((ref) => LoginViewModel(ref));
   }
   // In _MyLoginState class, modify _loadStoredCredentials:
 
-  
   @override
   void dispose() {
     _animationController.dispose();
@@ -79,7 +74,6 @@ final loginViewModelProvider = Provider((ref) => LoginViewModel(ref));
     final rememberMe = ref.watch(viewModel.rememberMeProvider);
     // final id = ref.watch(viewModel.idProvider);
     // final password = ref.watch(viewModel.passwordProvider);
- 
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -176,14 +170,26 @@ final loginViewModelProvider = Provider((ref) => LoginViewModel(ref));
                               customTextField(
                                 controller: _idController,
                                 hintText: "Username",
-                                onChanged: (value) => ref.read(viewModel.idProvider.notifier).state = value,
+                                onChanged:
+                                    (value) =>
+                                        ref
+                                            .read(viewModel.idProvider.notifier)
+                                            .state = value,
                               ),
                               const SizedBox(height: 15),
                               customTextField(
                                 controller: _passwordController,
                                 hintText: "Password",
                                 obscureText: true,
-                                onChanged: (value) => ref.read(viewModel.passwordProvider.notifier).state = value,
+                                onChanged:
+                                    (value) =>
+                                        ref
+                                            .read(
+                                              viewModel
+                                                  .passwordProvider
+                                                  .notifier,
+                                            )
+                                            .state = value,
                               ),
                               const SizedBox(height: 10),
                               Row(
@@ -192,7 +198,12 @@ final loginViewModelProvider = Provider((ref) => LoginViewModel(ref));
                                   Checkbox(
                                     value: rememberMe,
                                     onChanged: (value) {
-                                      ref.read(viewModel.rememberMeProvider.notifier)
+                                      ref
+                                          .read(
+                                            viewModel
+                                                .rememberMeProvider
+                                                .notifier,
+                                          )
                                           .state = value ?? false;
                                     },
                                   ),
@@ -231,7 +242,12 @@ final loginViewModelProvider = Provider((ref) => LoginViewModel(ref));
                                     horizontal: 50,
                                   ),
                                 ),
-                                onPressed: () => viewModel.login(_idController.text, _passwordController.text, context),
+                                onPressed:
+                                    () => viewModel.login(
+                                      _idController.text,
+                                      _passwordController.text,
+                                      context,
+                                    ),
                                 child: const Text(
                                   "Log In",
                                   style: TextStyle(

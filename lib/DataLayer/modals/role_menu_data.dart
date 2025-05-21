@@ -1,5 +1,4 @@
-import 'package:sprash_arch/features/Appbar/Modals/menu_model.dart';
-
+import 'package:sparsh/features/Appbar/Modals/menu_model.dart';
 
 final Map<String, RoleMenu> menuData = {
   'admin': RoleMenu(
@@ -120,9 +119,6 @@ final Map<String, RoleMenu> menuData = {
     ],
   ),
 
-
-
-  
   'custm': RoleMenu(
     roleName: 'custm',
     transactionLinks: [
